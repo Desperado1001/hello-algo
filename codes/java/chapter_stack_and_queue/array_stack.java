@@ -1,7 +1,7 @@
 /**
  * File: array_stack.java
  * Created Time: 2022-11-25
- * Author: Krahets (krahets@163.com)
+ * Author: krahets (krahets@163.com)
  */
 
 package chapter_stack_and_queue;
@@ -11,6 +11,7 @@ import java.util.*;
 /* 基于数组实现的栈 */
 class ArrayStack {
     private ArrayList<Integer> stack;
+
     public ArrayStack() {
         // 初始化列表（动态数组）
         stack = new ArrayList<>();
@@ -34,14 +35,14 @@ class ArrayStack {
     /* 出栈 */
     public int pop() {
         if (isEmpty())
-            throw new EmptyStackException();
+            throw new IndexOutOfBoundsException();
         return stack.remove(size() - 1);
     }
 
     /* 访问栈顶元素 */
     public int peek() {
         if (isEmpty())
-            throw new EmptyStackException();
+            throw new IndexOutOfBoundsException();
         return stack.get(size() - 1);
     }
 

@@ -1,63 +1,56 @@
 """
 File: list.py
 Created Time: 2022-11-25
-Author: Krahets (krahets@163.com)
+Author: krahets (krahets@163.com)
 """
 
-import sys, os.path as osp
-sys.path.append(osp.dirname(osp.dirname(osp.abspath(__file__))))
-from include import *
-
-
-""" Driver Code """
+"""Driver Code"""
 if __name__ == "__main__":
-    """ 初始化列表 """
-    list = [1, 3, 2, 5, 4]
-    print("列表 list =", list)
+    # 初始化列表
+    nums: list[int] = [1, 3, 2, 5, 4]
+    print("\n列表 nums =", nums)
 
-    """ 访问元素 """
-    num = list[1]
-    print("访问索引 1 处的元素，得到 num =", num)
+    # 访问元素
+    x: int = nums[1]
+    print("\n访问索引 1 处的元素，得到 x =", x)
 
-    """ 更新元素 """
-    list[1] = 0
-    print("将索引 1 处的元素更新为 0 ，得到 list =", list)
+    # 更新元素
+    nums[1] = 0
+    print("\n将索引 1 处的元素更新为 0 ，得到 nums =", nums)
 
-    """ 清空列表 """
-    list.clear()
-    print("清空列表后 list =", list)
+    # 清空列表
+    nums.clear()
+    print("\n清空列表后 nums =", nums)
 
-    """ 尾部添加元素 """
-    list.append(1)
-    list.append(3)
-    list.append(2)
-    list.append(5)
-    list.append(4)
-    print("添加元素后 list =", list)
+    # 在尾部添加元素
+    nums.append(1)
+    nums.append(3)
+    nums.append(2)
+    nums.append(5)
+    nums.append(4)
+    print("\n添加元素后 nums =", nums)
 
-    """ 中间插入元素 """
-    list.insert(3, 6)
-    print("在索引 3 处插入数字 6 ，得到 list =", list)
+    # 在中间插入元素
+    nums.insert(3, 6)
+    print("\n在索引 3 处插入数字 6 ，得到 nums =", nums)
 
-    """ 删除元素 """
-    list.pop(3)
-    print("删除索引 3 处的元素，得到 list =", list)
+    # 删除元素
+    nums.pop(3)
+    print("\n删除索引 3 处的元素，得到 nums =", nums)
 
-    """ 通过索引遍历列表 """
+    # 通过索引遍历列表
     count = 0
-    for i in range(len(list)):
-        count += 1
+    for i in range(len(nums)):
+        count += nums[i]
+    # 直接遍历列表元素
+    for num in nums:
+        count += num
 
-    """ 直接遍历列表元素 """
-    count = 0
-    for n in list:
-        count += 1
+    # 拼接两个列表
+    nums1 = [6, 8, 7, 10, 9]
+    nums += nums1
+    print("\n将列表 nums1 拼接到 nums 之后，得到 nums =", nums)
 
-    """ 拼接两个列表 """
-    list1 = [6, 8, 7, 10, 9]
-    list += list1
-    print("将列表 list1 拼接到 list 之后，得到 list =", list)
-
-    """ 排序列表 """
-    list.sort()
-    print("排序列表后 list =", list)
+    # 排序列表
+    nums.sort()
+    print("\n排序列表后 nums =", nums)

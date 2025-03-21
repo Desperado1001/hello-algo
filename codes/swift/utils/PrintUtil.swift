@@ -26,10 +26,10 @@ public enum PrintUtil {
     }
 
     public static func printTree(root: TreeNode?) {
-        printTree(root: root, prev: nil, isLeft: false)
+        printTree(root: root, prev: nil, isRight: false)
     }
 
-    private static func printTree(root: TreeNode?, prev: Trunk?, isLeft: Bool) {
+    private static func printTree(root: TreeNode?, prev: Trunk?, isRight: Bool) {
         if root == nil {
             return
         }
@@ -37,11 +37,11 @@ public enum PrintUtil {
         var prevStr = "    "
         let trunk = Trunk(prev: prev, str: prevStr)
 
-        printTree(root: root?.right, prev: trunk, isLeft: true)
+        printTree(root: root?.right, prev: trunk, isRight: true)
 
         if prev == nil {
             trunk.str = "———"
-        } else if isLeft {
+        } else if isRight {
             trunk.str = "/———"
             prevStr = "   |"
         } else {
@@ -57,7 +57,7 @@ public enum PrintUtil {
         }
         trunk.str = "   |"
 
-        printTree(root: root?.left, prev: trunk, isLeft: false)
+        printTree(root: root?.left, prev: trunk, isRight: false)
     }
 
     private static func showTrunks(p: Trunk?) {
@@ -67,5 +67,27 @@ public enum PrintUtil {
 
         showTrunks(p: p?.prev)
         print(p!.str, terminator: "")
+    }
+
+    public static func printHashMap<K, V>(map: [K: V]) {
+        for (key, value) in map {
+            print("\(key) -> \(value)")
+        }
+    }
+
+    public static func printHeap(queue: [Int]) {
+        print("堆的数组表示：", terminator: "")
+        print(queue)
+        print("堆的树状表示：")
+        let root = TreeNode.listToTree(arr: queue)
+        printTree(root: root)
+    }
+
+    public static func printMatrix<T>(matrix: [[T]]) {
+        print("[")
+        for row in matrix {
+            print("  \(row),")
+        }
+        print("]")
     }
 }

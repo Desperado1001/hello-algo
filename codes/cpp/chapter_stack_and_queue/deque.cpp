@@ -1,11 +1,10 @@
 /**
  * File: deque.cpp
  * Created Time: 2022-11-25
- * Author: Krahets (krahets@163.com)
+ * Author: krahets (krahets@163.com)
  */
 
-#include "../include/include.hpp"
-
+#include "../utils/common.hpp"
 
 /* Driver Code */
 int main() {
@@ -19,7 +18,7 @@ int main() {
     deque.push_front(3);
     deque.push_front(1);
     cout << "双向队列 deque = ";
-    PrintUtil::printDeque(deque);
+    printDeque(deque);
 
     /* 访问元素 */
     int front = deque.front();
@@ -30,10 +29,10 @@ int main() {
     /* 元素出队 */
     deque.pop_front();
     cout << "队首出队元素 popFront = " << front << "，队首出队后 deque = ";
-    PrintUtil::printDeque(deque);
+    printDeque(deque);
     deque.pop_back();
     cout << "队尾出队元素 popLast = " << back << "，队尾出队后 deque = ";
-    PrintUtil::printDeque(deque);
+    printDeque(deque);
 
     /* 获取双向队列的长度 */
     int size = deque.size();

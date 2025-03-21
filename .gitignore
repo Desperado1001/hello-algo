@@ -1,16 +1,14 @@
-# MacOS Desktop Services Store
+# macOS
 .DS_Store
 
-# Editor
+# editors
 .vscode/
-.idea/
-hello-algo.iml
+**/.idea
 
 # mkdocs files
-site/
 .cache/
-codes/scripts
-docs/overrides/
 
-# python files
-__pycache__
+# build
+/build
+/site
+/utils

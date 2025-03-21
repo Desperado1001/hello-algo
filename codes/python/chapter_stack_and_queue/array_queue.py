@@ -4,72 +4,69 @@ Created Time: 2022-12-01
 Author: Peng Chen (pengchzn@gmail.com)
 """
 
-import os.path as osp
-import sys
 
-sys.path.append(osp.dirname(osp.dirname(osp.abspath(__file__))))
-from include import *
-
-""" 基于环形数组实现的队列 """
 class ArrayQueue:
-    def __init__(self, size):
-        self.__nums = [0] * size  # 用于存储队列元素的数组
-        self.__front = 0             # 头指针，指向队首
-        self.__rear = 0              # 尾指针，指向队尾 + 1
+    """基于环形数组实现的队列"""
 
-    """ 获取队列的容量 """
-    def capacity(self):
-        return len(self.__nums)
+    def __init__(self, size: int):
+        """构造方法"""
+        self._nums: list[int] = [0] * size  # 用于存储队列元素的数组
+        self._front: int = 0  # 队首指针，指向队首元素
+        self._size: int = 0  # 队列长度
 
-    """ 获取队列的长度 """
-    def size(self):
-        # 由于将数组看作为环形，可能 rear < front ，因此需要取余数
-        return (self.capacity() + self.__rear - self.__front) % self.capacity()
+    def capacity(self) -> int:
+        """获取队列的容量"""
+        return len(self._nums)
 
-    """ 判断队列是否为空 """
-    def is_empty(self):
-        return (self.__rear - self.__front) == 0
+    def size(self) -> int:
+        """获取队列的长度"""
+        return self._size
 
-    """ 入队 """
-    def push(self, val):
-        if self.size() == self.capacity():
-            print("队列已满")
-            return False
-        # 尾结点后添加 num
-        self.__nums[self.__rear] = val
-        # 尾指针向后移动一位，越过尾部后返回到数组头部
-        self.__rear = (self.__rear + 1) % self.capacity()
+    def is_empty(self) -> bool:
+        """判断队列是否为空"""
+        return self._size == 0
 
-    """ 出队 """
-    def poll(self):
-        num = self.peek()
-        # 队头指针向后移动一位，若越过尾部则返回到数组头部
-        self.__front = (self.__front + 1) % self.capacity()
+    def push(self, num: int):
+        """入队"""
+        if self._size == self.capacity():
+            raise IndexError("队列已满")
+        # 计算队尾指针，指向队尾索引 + 1
+        # 通过取余操作实现 rear 越过数组尾部后回到头部
+        rear: int = (self._front + self._size) % self.capacity()
+        # 将 num 添加至队尾
+        self._nums[rear] = num
+        self._size += 1
+
+    def pop(self) -> int:
+        """出队"""
+        num: int = self.peek()
+        # 队首指针向后移动一位，若越过尾部，则返回到数组头部
+        self._front = (self._front + 1) % self.capacity()
+        self._size -= 1
         return num
 
-    """ 访问队首元素 """
-    def peek(self):
+    def peek(self) -> int:
+        """访问队首元素"""
         if self.is_empty():
-            print("队列为空")
-            return False
-        return self.__nums[self.__front]
+            raise IndexError("队列为空")
+        return self._nums[self._front]
 
-    """ 返回列表用于打印 """
-    def to_list(self):
+    def to_list(self) -> list[int]:
+        """返回列表用于打印"""
         res = [0] * self.size()
-        j = self.__front
+        j: int = self._front
         for i in range(self.size()):
-            res[i] = self.__nums[(j % self.capacity())]
+            res[i] = self._nums[(j % self.capacity())]
             j += 1
         return res
 
 
-""" Driver Code """
+"""Driver Code"""
 if __name__ == "__main__":
-    """ 初始化队列 """
+    # 初始化队列
     queue = ArrayQueue(10)
 
-    """ 元素入队 """
+    # 元素入队
     queue.push(1)
     queue.push(3)
     queue.push(2)
@@ -77,19 +74,25 @@ if __name__ == "__main__":
     queue.push(4)
     print("队列 queue =", queue.to_list())
 
-    """ 访问队首元素 """
-    peek = queue.peek()
+    # 访问队首元素
+    peek: int = queue.peek()
     print("队首元素 peek =", peek)
 
-    """ 元素出队 """
-    poll = queue.poll()
-    print("出队元素 poll =", poll)
+    # 元素出队
+    pop: int = queue.pop()
+    print("出队元素 pop =", pop)
     print("出队后 queue =", queue.to_list())
 
-    """ 获取队列的长度 """
-    size = queue.size()
+    # 获取队列的长度
+    size: int = queue.size()
     print("队列长度 size =", size)
 
-    """ 判断队列是否为空 """
-    is_empty = queue.is_empty()
+    # 判断队列是否为空
+    is_empty: bool = queue.is_empty()
     print("队列是否为空 =", is_empty)
+
+    # 测试环形数组
+    for i in range(10):
+        queue.push(i)
+        queue.pop()
+        print("第", i, "轮入队 + 出队后 queue = ", queue.to_list())

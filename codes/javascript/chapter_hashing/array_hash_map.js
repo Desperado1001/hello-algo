@@ -5,19 +5,19 @@
  */
 
 /* 键值对 Number -> String */
-class Entry {
+class Pair {
     constructor(key, val) {
         this.key = key;
         this.val = val;
     }
 }
 
-/* 基于数组简易实现的哈希表 */
+/* 基于数组实现的哈希表 */
 class ArrayHashMap {
-    #bucket;
+    #buckets;
     constructor() {
-        // 初始化一个长度为 100 的桶（数组）
-        this.#bucket = new Array(100).fill(null);
+        // 初始化数组，包含 100 个桶
+        this.#buckets = new Array(100).fill(null);
     }
 
     /* 哈希函数 */
@@ -28,30 +28,30 @@ class ArrayHashMap {
     /* 查询操作 */
     get(key) {
         let index = this.#hashFunc(key);
-        let entry = this.#bucket[index];
-        if (entry === null) return null;
-        return entry.val;
+        let pair = this.#buckets[index];
+        if (pair === null) return null;
+        return pair.val;
     }
 
     /* 添加操作 */
     set(key, val) {
         let index = this.#hashFunc(key);
-        this.#bucket[index] = new Entry(key, val);
+        this.#buckets[index] = new Pair(key, val);
     }
 
     /* 删除操作 */
     delete(key) {
         let index = this.#hashFunc(key);
         // 置为 null ，代表删除
-        this.#bucket[index] = null;
+        this.#buckets[index] = null;
     }
 
     /* 获取所有键值对 */
     entries() {
         let arr = [];
-        for (let i = 0; i < this.#bucket.length; i++) {
-            if (this.#bucket[i]) {
-                arr.push(this.#bucket[i]);
+        for (let i = 0; i < this.#buckets.length; i++) {
+            if (this.#buckets[i]) {
+                arr.push(this.#buckets[i]);
             }
         }
         return arr;
@@ -60,9 +60,9 @@ class ArrayHashMap {
     /* 获取所有键 */
     keys() {
         let arr = [];
-        for (let i = 0; i < this.#bucket.length; i++) {
-            if (this.#bucket[i]) {
-                arr.push(this.#bucket[i]?.key);
+        for (let i = 0; i < this.#buckets.length; i++) {
+            if (this.#buckets[i]) {
+                arr.push(this.#buckets[i].key);
             }
         }
         return arr;
@@ -71,9 +71,9 @@ class ArrayHashMap {
     /* 获取所有值 */
     values() {
         let arr = [];
-        for (let i = 0; i < this.#bucket.length; i++) {
-            if (this.#bucket[i]) {
-                arr.push(this.#bucket[i]?.val);
+        for (let i = 0; i < this.#buckets.length; i++) {
+            if (this.#buckets[i]) {
+                arr.push(this.#buckets[i].val);
             }
         }
         return arr;
@@ -81,10 +81,9 @@ class ArrayHashMap {
 
     /* 打印哈希表 */
     print() {
-        let entrySet = this.entries();
-        for (const entry of entrySet) {
-            if (!entry) continue;
-            console.info(`${entry.key} -> ${entry.val}`);
+        let pairSet = this.entries();
+        for (const pair of pairSet) {
+            console.info(`${pair.key} -> ${pair.val}`);
         }
     }
 }
@@ -103,7 +102,7 @@ console.info('\n添加完成后，哈希表为\nKey -> Value');
 map.print();
 
 /* 查询操作 */
-// 向哈希表输入键 key ，得到值 value
+// 向哈希表中输入键 key ，得到值 value
 let name = map.get(15937);
 console.info('\n输入学号 15937 ，查询到姓名 ' + name);
 
@@ -115,9 +114,9 @@ map.print();
 
 /* 遍历哈希表 */
 console.info('\n遍历键值对 Key->Value');
-for (const entry of map.entries()) {
-    if (!entry) continue;
-    console.info(entry.key + ' -> ' + entry.val);
+for (const pair of map.entries()) {
+    if (!pair) continue;
+    console.info(pair.key + ' -> ' + pair.val);
 }
 console.info('\n单独遍历键 Key');
 for (const key of map.keys()) {

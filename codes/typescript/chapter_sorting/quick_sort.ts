@@ -15,8 +15,9 @@ class QuickSort {
 
     /* 哨兵划分 */
     partition(nums: number[], left: number, right: number): number {
-        // 以 nums[left] 作为基准数
-        let i = left, j = right;
+        // 以 nums[left] 为基准数
+        let i = left,
+            j = right;
         while (i < j) {
             while (i < j && nums[j] >= nums[left]) {
                 j -= 1; // 从右向左找首个小于基准数的元素
@@ -54,27 +55,37 @@ class QuickSortMedian {
         nums[j] = tmp;
     }
 
-    /* 选取三个元素的中位数 */
-    medianThree(nums: number[], left: number, mid: number, right: number): number {
-        // 使用了异或操作来简化代码
-        // 异或规则为 0 ^ 0 = 1 ^ 1 = 0, 0 ^ 1 = 1 ^ 0 = 1
-        if (Number(nums[left] > nums[mid]) ^ Number(nums[left] > nums[right])) {
-            return left;
-        } else if (Number(nums[mid] < nums[left]) ^ Number(nums[mid] < nums[right])) {
-            return mid;
-        } else {
-            return right;
-        }
+    /* 选取三个候选元素的中位数 */
+    medianThree(
+        nums: number[],
+        left: number,
+        mid: number,
+        right: number
+    ): number {
+        let l = nums[left],
+            m = nums[mid],
+            r = nums[right];
+        // m 在 l 和 r 之间
+        if ((l <= m && m <= r) || (r <= m && m <= l)) return mid;
+        // l 在 m 和 r 之间
+        if ((m <= l && l <= r) || (r <= l && l <= m)) return left;
+        return right;
     }
 
     /* 哨兵划分（三数取中值） */
     partition(nums: number[], left: number, right: number): number {
         // 选取三个候选元素的中位数
-        let med = this.medianThree(nums, left, Math.floor((left + right) / 2), right);
+        let med = this.medianThree(
+            nums,
+            left,
+            Math.floor((left + right) / 2),
+            right
+        );
         // 将中位数交换至数组最左端
         this.swap(nums, left, med);
-        // 以 nums[left] 作为基准数
-        let i = left, j = right;
+        // 以 nums[left] 为基准数
+        let i = left,
+            j = right;
         while (i < j) {
             while (i < j && nums[j] >= nums[left]) {
                 j--; // 从右向左找首个小于基准数的元素
@@ -113,8 +124,9 @@ class QuickSortTailCall {
 
     /* 哨兵划分 */
     partition(nums: number[], left: number, right: number): number {
-        // 以 nums[left] 作为基准数
-        let i = left, j = right;
+        // 以 nums[left] 为基准数
+        let i = left,
+            j = right;
         while (i < j) {
             while (i < j && nums[j] >= nums[left]) {
                 j--; // 从右向左找首个小于基准数的元素
@@ -134,13 +146,13 @@ class QuickSortTailCall {
         while (left < right) {
             // 哨兵划分操作
             let pivot = this.partition(nums, left, right);
-            // 对两个子数组中较短的那个执行快排
+            // 对两个子数组中较短的那个执行快速排序
             if (pivot - left < right - pivot) {
                 this.quickSort(nums, left, pivot - 1); // 递归排序左子数组
-                left = pivot + 1; // 剩余待排序区间为 [pivot + 1, right]
+                left = pivot + 1; // 剩余未排序区间为 [pivot + 1, right]
             } else {
                 this.quickSort(nums, pivot + 1, right); // 递归排序右子数组
-                right = pivot - 1; // 剩余待排序区间为 [left, pivot - 1]
+                right = pivot - 1; // 剩余未排序区间为 [left, pivot - 1]
             }
         }
     }
@@ -148,20 +160,20 @@ class QuickSortTailCall {
 
 /* Driver Code */
 /* 快速排序  */
-const nums = [4, 1, 3, 1, 5, 2];
+const nums = [2, 4, 1, 0, 3, 5];
 const quickSort = new QuickSort();
 quickSort.quickSort(nums, 0, nums.length - 1);
 console.log('快速排序完成后 nums =', nums);
 
 /* 快速排序（中位基准数优化） */
-const nums1 = [4, 1, 3, 1, 5, 2];
-const quickSortMedian = new QuickSort();
+const nums1 = [2, 4, 1, 0, 3, 5];
+const quickSortMedian = new QuickSortMedian();
 quickSortMedian.quickSort(nums1, 0, nums1.length - 1);
 console.log('快速排序（中位基准数优化）完成后 nums =', nums1);
 
 /* 快速排序（尾递归优化） */
-const nums2 = [4, 1, 3, 1, 5, 2];
-const quickSortTailCall = new QuickSort();
+const nums2 = [2, 4, 1, 0, 3, 5];
+const quickSortTailCall = new QuickSortTailCall();
 quickSortTailCall.quickSort(nums2, 0, nums2.length - 1);
 console.log('快速排序（尾递归优化）完成后 nums =', nums2);
 

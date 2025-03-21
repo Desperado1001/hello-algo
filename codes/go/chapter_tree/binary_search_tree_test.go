@@ -10,32 +10,36 @@ import (
 )
 
 func TestBinarySearchTree(t *testing.T) {
-	nums := []int{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15}
-	bst := newBinarySearchTree(nums)
+	bst := newBinarySearchTree()
+	nums := []int{8, 4, 12, 2, 6, 10, 14, 1, 3, 5, 7, 9, 11, 13, 15}
+	// 请注意，不同的插入顺序会生成不同的二叉树，该序列可以生成一个完美二叉树
+	for _, num := range nums {
+		bst.insert(num)
+	}
 	fmt.Println("\n初始化的二叉树为:")
 	bst.print()
 
-	// 获取根结点
+	// 获取根节点
 	node := bst.getRoot()
-	fmt.Println("\n二叉树的根结点为:", node.Val)
+	fmt.Println("\n二叉树的根节点为:", node.Val)
 
-	// 查找结点
-	node = bst.search(5)
-	fmt.Println("\n查找到的结点对象为", node, "，结点值 =", node.Val)
+	// 查找节点
+	node = bst.search(7)
+	fmt.Println("查找到的节点对象为", node, "，节点值 =", node.Val)
 
-	// 插入结点
-	node = bst.insert(16)
-	fmt.Println("\n插入结点后 16 的二叉树为:")
+	// 插入节点
+	bst.insert(16)
+	fmt.Println("\n插入节点后 16 的二叉树为:")
 	bst.print()
 
-	// 删除结点
+	// 删除节点
 	bst.remove(1)
-	fmt.Println("\n删除结点 1 后的二叉树为:")
+	fmt.Println("\n删除节点 1 后的二叉树为:")
 	bst.print()
 	bst.remove(2)
-	fmt.Println("\n删除结点 2 后的二叉树为:")
+	fmt.Println("\n删除节点 2 后的二叉树为:")
 	bst.print()
 	bst.remove(4)
-	fmt.Println("\n删除结点 4 后的二叉树为:")
+	fmt.Println("\n删除节点 4 后的二叉树为:")
 	bst.print()
 }

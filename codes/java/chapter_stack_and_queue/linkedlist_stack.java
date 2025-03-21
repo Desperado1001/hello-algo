@@ -1,19 +1,19 @@
 /**
  * File: linkedlist_stack.java
  * Created Time: 2022-11-25
- * Author: Krahets (krahets@163.com)
+ * Author: krahets (krahets@163.com)
  */
 
 package chapter_stack_and_queue;
 
 import java.util.*;
-import include.*;
+import utils.*;
 
 /* 基于链表实现的栈 */
 class LinkedListStack {
-    private ListNode stackPeek;  // 将头结点作为栈顶
-    private int stkSize = 0;   // 栈的长度
-    
+    private ListNode stackPeek; // 将头节点作为栈顶
+    private int stkSize = 0; // 栈的长度
+
     public LinkedListStack() {
         stackPeek = null;
     }
@@ -46,8 +46,8 @@ class LinkedListStack {
 
     /* 访问栈顶元素 */
     public int peek() {
-        if (size() == 0)
-            throw new EmptyStackException();
+        if (isEmpty())
+            throw new IndexOutOfBoundsException();
         return stackPeek.val;
     }
 

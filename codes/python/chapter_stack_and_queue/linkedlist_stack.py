@@ -4,48 +4,53 @@ Created Time: 2022-11-29
 Author: Peng Chen (pengchzn@gmail.com)
 """
 
-import sys, os.path as osp
-sys.path.append(osp.dirname(osp.dirname(osp.abspath(__file__))))
-from include import *
+import sys
+from pathlib import Path
 
-""" 基于链表实现的栈 """
+sys.path.append(str(Path(__file__).parent.parent))
+from modules import ListNode
+
+
 class LinkedListStack:
+    """基于链表实现的栈"""
+
     def __init__(self):
-        self.__peek = None
-        self.__size = 0
+        """构造方法"""
+        self._peek: ListNode | None = None
+        self._size: int = 0
 
-    """ 获取栈的长度 """
-    def size(self):
-        return self.__size
+    def size(self) -> int:
+        """获取栈的长度"""
+        return self._size
 
-    """ 判断栈是否为空 """
-    def is_empty(self):
-        return not self.__peek
+    def is_empty(self) -> bool:
+        """判断栈是否为空"""
+        return self._size == 0
 
-    """ 入栈 """
-    def push(self, val):
+    def push(self, val: int):
+        """入栈"""
         node = ListNode(val)
-        node.next = self.__peek
-        self.__peek = node
-        self.__size += 1
+        node.next = self._peek
+        self._peek = node
+        self._size += 1
 
-    """ 出栈 """
-    def pop(self):
+    def pop(self) -> int:
+        """出栈"""
         num = self.peek()
-        self.__peek = self.__peek.next
-        self.__size -= 1
+        self._peek = self._peek.next
+        self._size -= 1
         return num
 
-    """ 访问栈顶元素 """
-    def peek(self):
-        # 判空处理
-        if not self.__peek: return None
-        return self.__peek.val
+    def peek(self) -> int:
+        """访问栈顶元素"""
+        if self.is_empty():
+            raise IndexError("栈为空")
+        return self._peek.val
 
-    """ 转化为列表用于打印 """
-    def to_list(self):
+    def to_list(self) -> list[int]:
+        """转化为列表用于打印"""
         arr = []
-        node = self.__peek
+        node = self._peek
         while node:
             arr.append(node.val)
             node = node.next
@@ -53,12 +58,12 @@ class LinkedListStack:
         return arr
 
 
-""" Driver Code """
+"""Driver Code"""
 if __name__ == "__main__":
-    """ 初始化栈 """
+    # 初始化栈
     stack = LinkedListStack()
 
-    """ 元素入栈 """
+    # 元素入栈
     stack.push(1)
     stack.push(3)
     stack.push(2)
@@ -66,19 +71,19 @@ if __name__ == "__main__":
     stack.push(4)
     print("栈 stack =", stack.to_list())
 
-    """ 访问栈顶元素 """
-    peek = stack.peek()
+    # 访问栈顶元素
+    peek: int = stack.peek()
     print("栈顶元素 peek =", peek)
 
-    """ 元素出栈 """
-    pop = stack.pop()
+    # 元素出栈
+    pop: int = stack.pop()
     print("出栈元素 pop =", pop)
     print("出栈后 stack =", stack.to_list())
 
-    """ 获取栈的长度 """
-    size = stack.size()
+    # 获取栈的长度
+    size: int = stack.size()
     print("栈的长度 size =", size)
 
-    """ 判断是否为空 """
-    is_empty = stack.is_empty()
+    # 判断是否为空
+    is_empty: bool = stack.is_empty()
     print("栈是否为空 =", is_empty)

@@ -1,36 +1,24 @@
----
-comments: true
----
-
 # 时间复杂度
 
-## 统计算法运行时间
+运行时间可以直观且准确地反映算法的效率。如果我们想准确预估一段代码的运行时间，应该如何操作呢？
 
-运行时间能够直观且准确地体现出算法的效率水平。如果我们想要 **准确预估一段代码的运行时间** ，该如何做呢？
+1. **确定运行平台**，包括硬件配置、编程语言、系统环境等，这些因素都会影响代码的运行效率。
+2. **评估各种计算操作所需的运行时间**，例如加法操作 `+` 需要 1 ns ，乘法操作 `*` 需要 10 ns ，打印操作 `print()` 需要 5 ns 等。
+3. **统计代码中所有的计算操作**，并将所有操作的执行时间求和，从而得到运行时间。
 
-1. 首先需要 **确定运行平台** ，包括硬件配置、编程语言、系统环境等，这些都会影响到代码的运行效率。
-2. 评估 **各种计算操作的所需运行时间** ，例如加法操作 `+` 需要 1 ns ，乘法操作 `*` 需要 10 ns ，打印操作需要 5 ns 等。
-3. 根据代码 **统计所有计算操作的数量** ，并将所有操作的执行时间求和，即可得到运行时间。
+例如在以下代码中，输入数据大小为 $n$ ：
 
-例如以下代码，输入数据大小为 $n$ ，根据以上方法，可以得到算法运行时间为 $6n + 12$ ns 。
+=== "Python"
 
-$$
-1 + 1 + 10 + (1 + 5) \times n = 6n + 12
-$$
-
-=== "Java"
-
-    ```java title=""
-    // 在某运行平台下
-    void algorithm(int n) {
-        int a = 2;  // 1 ns
-        a = a + 1;  // 1 ns
-        a = a * 2;  // 10 ns
-        // 循环 n 次
-        for (int i = 0; i < n; i++) {  // 1 ns ，每轮都要执行 i++
-            System.out.println(0);     // 5 ns
-        }
-    }
+    ```python title=""
+    # 在某运行平台下
+    def algorithm(n: int):
+        a = 2      # 1 ns
+        a = a + 1  # 1 ns
+        a = a * 2  # 10 ns
+        # 循环 n 次
+        for _ in range(n):  # 1 ns
+            print(0)        # 5 ns
     ```
 
 === "C++"
@@ -42,81 +30,23 @@ $$
         a = a + 1;  // 1 ns
         a = a * 2;  // 10 ns
         // 循环 n 次
-        for (int i = 0; i < n; i++) {  // 1 ns ，每轮都要执行 i++
+        for (int i = 0; i < n; i++) {  // 1 ns
             cout << 0 << endl;         // 5 ns
         }
     }
     ```
 
-=== "Python"
+=== "Java"
 
-    ```python title=""
-    # 在某运行平台下
-    def algorithm(n):
-        a = 2      # 1 ns
-        a = a + 1  # 1 ns
-        a = a * 2  # 10 ns
-        # 循环 n 次
-        for _ in range(n):  # 1 ns
-            print(0)        # 5 ns
-    ```
-
-=== "Go"
-
-    ```go title=""
-    // 在某运行平台下
-    func algorithm(n int) {
-        a := 2      // 1 ns
-        a = a + 1   // 1 ns
-        a = a * 2   // 10 ns
-        // 循环 n 次
-        for i := 0; i < n; i++ {    // 1 ns
-            fmt.Println(a)          // 5 ns
-        }
-    }
-    ```
-
-=== "JavaScript"
-
-    ```js title=""
-    // 在某运行平台下
-    function algorithm(n) {
-        var a = 2; // 1 ns
-        a = a + 1; // 1 ns
-        a = a * 2; // 10 ns
-        // 循环 n 次
-        for(let i = 0; i < n; i++) { // 1 ns ，每轮都要执行 i++
-            console.log(0); // 5 ns
-        }
-    }
-    ```
-
-=== "TypeScript"
-
-    ```typescript title=""
-    // 在某运行平台下
-    function algorithm(n: number): void {
-        var a: number = 2; // 1 ns
-        a = a + 1; // 1 ns
-        a = a * 2; // 10 ns
-        // 循环 n 次
-        for(let i = 0; i < n; i++) { // 1 ns ，每轮都要执行 i++
-            console.log(0); // 5 ns
-        }
-    }
-    ```
-
-=== "C"
-
-    ```c title=""
+    ```java title=""
     // 在某运行平台下
     void algorithm(int n) {
         int a = 2;  // 1 ns
         a = a + 1;  // 1 ns
         a = a * 2;  // 10 ns
         // 循环 n 次
-        for (int i = 0; i < n; i++) {   // 1 ns ，每轮都要执行 i++
-            printf("%d", 0);            // 5 ns
+        for (int i = 0; i < n; i++) {  // 1 ns
+            System.out.println(0);     // 5 ns
         }
     }
     ```
@@ -125,15 +55,28 @@ $$
 
     ```csharp title=""
     // 在某运行平台下
-    void algorithm(int n)
-    {
+    void Algorithm(int n) {
         int a = 2;  // 1 ns
         a = a + 1;  // 1 ns
         a = a * 2;  // 10 ns
         // 循环 n 次
-        for (int i = 0; i < n; i++)
-        {  // 1 ns ，每轮都要执行 i++
-            Console.WriteLine(0);     // 5 ns
+        for (int i = 0; i < n; i++) {  // 1 ns
+            Console.WriteLine(0);      // 5 ns
+        }
+    }
+    ```
+
+=== "Go"
+
+    ```go title=""
+    // 在某运行平台下
+    func algorithm(n int) {
+        a := 2     // 1 ns
+        a = a + 1  // 1 ns
+        a = a * 2  // 10 ns
+        // 循环 n 次
+        for i := 0; i < n; i++ {  // 1 ns
+            fmt.Println(a)        // 5 ns
         }
     }
     ```
@@ -142,7 +85,7 @@ $$
 
     ```swift title=""
     // 在某运行平台下
-    func algorithm(_ n: Int) {
+    func algorithm(n: Int) {
         var a = 2 // 1 ns
         a = a + 1 // 1 ns
         a = a * 2 // 10 ns
@@ -153,53 +96,170 @@ $$
     }
     ```
 
-但实际上， **统计算法的运行时间既不合理也不现实**。首先，我们不希望预估时间和运行平台绑定，毕竟算法需要跑在各式各样的平台之上。其次，我们很难获知每一种操作的运行时间，这为预估过程带来了极大的难度。
+=== "JS"
+
+    ```javascript title=""
+    // 在某运行平台下
+    function algorithm(n) {
+        var a = 2; // 1 ns
+        a = a + 1; // 1 ns
+        a = a * 2; // 10 ns
+        // 循环 n 次
+        for(let i = 0; i < n; i++) { // 1 ns
+            console.log(0); // 5 ns
+        }
+    }
+    ```
+
+=== "TS"
+
+    ```typescript title=""
+    // 在某运行平台下
+    function algorithm(n: number): void {
+        var a: number = 2; // 1 ns
+        a = a + 1; // 1 ns
+        a = a * 2; // 10 ns
+        // 循环 n 次
+        for(let i = 0; i < n; i++) { // 1 ns
+            console.log(0); // 5 ns
+        }
+    }
+    ```
+
+=== "Dart"
+
+    ```dart title=""
+    // 在某运行平台下
+    void algorithm(int n) {
+      int a = 2; // 1 ns
+      a = a + 1; // 1 ns
+      a = a * 2; // 10 ns
+      // 循环 n 次
+      for (int i = 0; i < n; i++) { // 1 ns
+        print(0); // 5 ns
+      }
+    }
+    ```
+
+=== "Rust"
+
+    ```rust title=""
+    // 在某运行平台下
+    fn algorithm(n: i32) {
+        let mut a = 2;      // 1 ns
+        a = a + 1;          // 1 ns
+        a = a * 2;          // 10 ns
+        // 循环 n 次
+        for _ in 0..n {     // 1 ns
+            println!("{}", 0);  // 5 ns
+        }
+    }
+    ```
+
+=== "C"
+
+    ```c title=""
+    // 在某运行平台下
+    void algorithm(int n) {
+        int a = 2;  // 1 ns
+        a = a + 1;  // 1 ns
+        a = a * 2;  // 10 ns
+        // 循环 n 次
+        for (int i = 0; i < n; i++) {   // 1 ns
+            printf("%d", 0);            // 5 ns
+        }
+    }
+    ```
+
+=== "Kotlin"
+
+    ```kotlin title=""
+    // 在某运行平台下
+    fun algorithm(n: Int) {
+        var a = 2 // 1 ns
+        a = a + 1 // 1 ns
+        a = a * 2 // 10 ns
+        // 循环 n 次
+        for (i in 0..<n) {  // 1 ns
+            println(0)      // 5 ns
+        }
+    }
+    ```
+
+=== "Ruby"
+
+    ```ruby title=""
+    # 在某运行平台下
+    def algorithm(n)
+        a = 2       # 1 ns
+        a = a + 1   # 1 ns
+        a = a * 2   # 10 ns
+        # 循环 n 次
+        (0...n).each do # 1 ns
+            puts 0      # 5 ns
+        end
+    end
+    ```
+
+=== "Zig"
+
+    ```zig title=""
+    // 在某运行平台下
+    fn algorithm(n: usize) void {
+        var a: i32 = 2; // 1 ns
+        a += 1; // 1 ns
+        a *= 2; // 10 ns
+        // 循环 n 次
+        for (0..n) |_| { // 1 ns
+            std.debug.print("{}\n", .{0}); // 5 ns
+        }
+    }
+    ```
+
+根据以上方法，可以得到算法的运行时间为 $(6n + 12)$ ns ：
+
+$$
+1 + 1 + 10 + (1 + 5) \times n = 6n + 12
+$$
+
+但实际上，**统计算法的运行时间既不合理也不现实**。首先，我们不希望将预估时间和运行平台绑定，因为算法需要在各种不同的平台上运行。其次，我们很难获知每种操作的运行时间，这给预估过程带来了极大的难度。
 
 ## 统计时间增长趋势
 
-「时间复杂度分析」采取了不同的做法，其统计的不是算法运行时间，而是 **算法运行时间随着数据量变大时的增长趋势** 。
+时间复杂度分析统计的不是算法运行时间，**而是算法运行时间随着数据量变大时的增长趋势**。
 
-“时间增长趋势”这个概念比较抽象，我们借助一个例子来理解。设输入数据大小为 $n$ ，给定三个算法 `A` , `B` , `C` 。
+“时间增长趋势”这个概念比较抽象，我们通过一个例子来加以理解。假设输入数据大小为 $n$ ，给定三个算法 `A`、`B` 和 `C` ：
 
-- 算法 `A` 只有 $1$ 个打印操作，算法运行时间不随着 $n$ 增大而增长。我们称此算法的时间复杂度为「常数阶」。
-- 算法 `B` 中的打印操作需要循环 $n$ 次，算法运行时间随着 $n$ 增大成线性增长。此算法的时间复杂度被称为「线性阶」。
-- 算法 `C` 中的打印操作需要循环 $1000000$ 次，但运行时间仍与输入数据大小 $n$ 无关。因此 `C` 的时间复杂度和 `A` 相同，仍为「常数阶」。
+=== "Python"
 
-=== "Java"
-
-    ```java title=""
-    // 算法 A 时间复杂度：常数阶
-    void algorithm_A(int n) {
-        System.out.println(0);
-    }
-    // 算法 B 时间复杂度：线性阶
-    void algorithm_B(int n) {
-        for (int i = 0; i < n; i++) {
-            System.out.println(0);
-        }
-    }
-    // 算法 C 时间复杂度：常数阶
-    void algorithm_C(int n) {
-        for (int i = 0; i < 1000000; i++) {
-            System.out.println(0);
-        }
-    }
+    ```python title=""
+    # 算法 A 的时间复杂度：常数阶
+    def algorithm_A(n: int):
+        print(0)
+    # 算法 B 的时间复杂度：线性阶
+    def algorithm_B(n: int):
+        for _ in range(n):
+            print(0)
+    # 算法 C 的时间复杂度：常数阶
+    def algorithm_C(n: int):
+        for _ in range(1000000):
+            print(0)
     ```
 
 === "C++"
 
     ```cpp title=""
-    // 算法 A 时间复杂度：常数阶
+    // 算法 A 的时间复杂度：常数阶
     void algorithm_A(int n) {
         cout << 0 << endl;
     }
-    // 算法 B 时间复杂度：线性阶
+    // 算法 B 的时间复杂度：线性阶
     void algorithm_B(int n) {
         for (int i = 0; i < n; i++) {
             cout << 0 << endl;
         }
     }
-    // 算法 C 时间复杂度：常数阶
+    // 算法 C 的时间复杂度：常数阶
     void algorithm_C(int n) {
         for (int i = 0; i < 1000000; i++) {
             cout << 0 << endl;
@@ -207,36 +267,62 @@ $$
     }
     ```
 
-=== "Python"
+=== "Java"
 
-    ```python title=""
-    # 算法 A 时间复杂度：常数阶
-    def algorithm_A(n):
-        print(0)
-    # 算法 B 时间复杂度：线性阶
-    def algorithm_B(n):
-        for _ in range(n):
-            print(0)
-    # 算法 C 时间复杂度：常数阶
-    def algorithm_C(n):
-        for _ in range(1000000):
-            print(0)
+    ```java title=""
+    // 算法 A 的时间复杂度：常数阶
+    void algorithm_A(int n) {
+        System.out.println(0);
+    }
+    // 算法 B 的时间复杂度：线性阶
+    void algorithm_B(int n) {
+        for (int i = 0; i < n; i++) {
+            System.out.println(0);
+        }
+    }
+    // 算法 C 的时间复杂度：常数阶
+    void algorithm_C(int n) {
+        for (int i = 0; i < 1000000; i++) {
+            System.out.println(0);
+        }
+    }
+    ```
+
+=== "C#"
+
+    ```csharp title=""
+    // 算法 A 的时间复杂度：常数阶
+    void AlgorithmA(int n) {
+        Console.WriteLine(0);
+    }
+    // 算法 B 的时间复杂度：线性阶
+    void AlgorithmB(int n) {
+        for (int i = 0; i < n; i++) {
+            Console.WriteLine(0);
+        }
+    }
+    // 算法 C 的时间复杂度：常数阶
+    void AlgorithmC(int n) {
+        for (int i = 0; i < 1000000; i++) {
+            Console.WriteLine(0);
+        }
+    }
     ```
 
 === "Go"
 
     ```go title=""
-    // 算法 A 时间复杂度：常数阶
+    // 算法 A 的时间复杂度：常数阶
     func algorithm_A(n int) {
         fmt.Println(0)
     }
-    // 算法 B 时间复杂度：线性阶
+    // 算法 B 的时间复杂度：线性阶
     func algorithm_B(n int) {
         for i := 0; i < n; i++ {
             fmt.Println(0)
         }
     }
-    // 算法 C 时间复杂度：常数阶
+    // 算法 C 的时间复杂度：常数阶
     func algorithm_C(n int) {
         for i := 0; i < 1000000; i++ {
             fmt.Println(0)
@@ -244,20 +330,43 @@ $$
     }
     ```
 
-=== "JavaScript"
+=== "Swift"
 
-    ```js title=""
-    // 算法 A 时间复杂度：常数阶
+    ```swift title=""
+    // 算法 A 的时间复杂度：常数阶
+    func algorithmA(n: Int) {
+        print(0)
+    }
+
+    // 算法 B 的时间复杂度：线性阶
+    func algorithmB(n: Int) {
+        for _ in 0 ..< n {
+            print(0)
+        }
+    }
+
+    // 算法 C 的时间复杂度：常数阶
+    func algorithmC(n: Int) {
+        for _ in 0 ..< 1_000_000 {
+            print(0)
+        }
+    }
+    ```
+
+=== "JS"
+
+    ```javascript title=""
+    // 算法 A 的时间复杂度：常数阶
     function algorithm_A(n) {
         console.log(0);
     }
-    // 算法 B 时间复杂度：线性阶
+    // 算法 B 的时间复杂度：线性阶
     function algorithm_B(n) {
         for (let i = 0; i < n; i++) {
             console.log(0);
         }
     }
-    // 算法 C 时间复杂度：常数阶
+    // 算法 C 的时间复杂度：常数阶
     function algorithm_C(n) {
         for (let i = 0; i < 1000000; i++) {
             console.log(0);
@@ -266,20 +375,20 @@ $$
 
     ```
 
-=== "TypeScript"
+=== "TS"
 
     ```typescript title=""
-    // 算法 A 时间复杂度：常数阶
+    // 算法 A 的时间复杂度：常数阶
     function algorithm_A(n: number): void {
         console.log(0);
     }
-    // 算法 B 时间复杂度：线性阶
+    // 算法 B 的时间复杂度：线性阶
     function algorithm_B(n: number): void {
         for (let i = 0; i < n; i++) {
             console.log(0);
         }
     }
-    // 算法 C 时间复杂度：常数阶
+    // 算法 C 的时间复杂度：常数阶
     function algorithm_C(n: number): void {
         for (let i = 0; i < 1000000; i++) {
             console.log(0);
@@ -287,20 +396,62 @@ $$
     }
     ```
 
+=== "Dart"
+
+    ```dart title=""
+    // 算法 A 的时间复杂度：常数阶
+    void algorithmA(int n) {
+      print(0);
+    }
+    // 算法 B 的时间复杂度：线性阶
+    void algorithmB(int n) {
+      for (int i = 0; i < n; i++) {
+        print(0);
+      }
+    }
+    // 算法 C 的时间复杂度：常数阶
+    void algorithmC(int n) {
+      for (int i = 0; i < 1000000; i++) {
+        print(0);
+      }
+    }
+    ```
+
+=== "Rust"
+
+    ```rust title=""
+    // 算法 A 的时间复杂度：常数阶
+    fn algorithm_A(n: i32) {
+        println!("{}", 0);
+    }
+    // 算法 B 的时间复杂度：线性阶
+    fn algorithm_B(n: i32) {
+        for _ in 0..n {
+            println!("{}", 0);
+        }
+    }
+    // 算法 C 的时间复杂度：常数阶
+    fn algorithm_C(n: i32) {
+        for _ in 0..1000000 {
+            println!("{}", 0);
+        }
+    }
+    ```
+
 === "C"
 
     ```c title=""
-    // 算法 A 时间复杂度：常数阶
+    // 算法 A 的时间复杂度：常数阶
     void algorithm_A(int n) {
         printf("%d", 0);
     }
-    // 算法 B 时间复杂度：线性阶
+    // 算法 B 的时间复杂度：线性阶
     void algorithm_B(int n) {
         for (int i = 0; i < n; i++) {
             printf("%d", 0);
         }
     }
-    // 算法 C 时间复杂度：常数阶
+    // 算法 C 的时间复杂度：常数阶
     void algorithm_C(int n) {
         for (int i = 0; i < 1000000; i++) {
             printf("%d", 0);
@@ -308,87 +459,97 @@ $$
     }
     ```
 
-=== "C#"
+=== "Kotlin"
 
-    ```csharp title=""
-    // 算法 A 时间复杂度：常数阶
-    void algorithm_A(int n)
-    {
-        Console.WriteLine(0);
+    ```kotlin title=""
+    // 算法 A 的时间复杂度：常数阶
+    fun algoritm_A(n: Int) {
+        println(0)
     }
-    // 算法 B 时间复杂度：线性阶
-    void algorithm_B(int n)
-    {
-        for (int i = 0; i < n; i++)
-        {
-            Console.WriteLine(0);
+    // 算法 B 的时间复杂度：线性阶
+    fun algorithm_B(n: Int) {
+        for (i in 0..<n){
+            println(0)
         }
     }
-    // 算法 C 时间复杂度：常数阶
-    void algorithm_C(int n)
-    {
-        for (int i = 0; i < 1000000; i++)
-        {
-            Console.WriteLine(0);
+    // 算法 C 的时间复杂度：常数阶
+    fun algorithm_C(n: Int) {
+        for (i in 0..<1000000) {
+            println(0)
         }
     }
     ```
 
-=== "Swift"
+=== "Ruby"
 
-    ```swift title=""
-    // 算法 A 时间复杂度：常数阶
-    func algorithmA(_ n: Int) {
-        print(0)
+    ```ruby title=""
+    # 算法 A 的时间复杂度：常数阶
+    def algorithm_A(n)
+        puts 0
+    end
+
+    # 算法 B 的时间复杂度：线性阶
+    def algorithm_B(n)
+        (0...n).each { puts 0 }
+    end
+
+    # 算法 C 的时间复杂度：常数阶
+    def algorithm_C(n)
+        (0...1_000_000).each { puts 0 }
+    end
+    ```
+
+=== "Zig"
+
+    ```zig title=""
+    // 算法 A 的时间复杂度：常数阶
+    fn algorithm_A(n: usize) void {
+        _ = n;
+        std.debug.print("{}\n", .{0});
     }
-
-    // 算法 B 时间复杂度：线性阶
-    func algorithmB(_ n: Int) {
-        for _ in 0 ..< n {
-            print(0)
+    // 算法 B 的时间复杂度：线性阶
+    fn algorithm_B(n: i32) void {
+        for (0..n) |_| {
+            std.debug.print("{}\n", .{0});
         }
     }
-
-    // 算法 C 时间复杂度：常数阶
-    func algorithmC(_ n: Int) {
-        for _ in 0 ..< 1000000 {
-            print(0)
+    // 算法 C 的时间复杂度：常数阶
+    fn algorithm_C(n: i32) void {
+        _ = n;
+        for (0..1000000) |_| {
+            std.debug.print("{}\n", .{0});
         }
     }
     ```
 
-![time_complexity_first_example](time_complexity.assets/time_complexity_first_example.png)
+下图展示了以上三个算法函数的时间复杂度。
 
-<p align="center"> Fig. 算法 A, B, C 的时间增长趋势 </p>
+- 算法 `A` 只有 $1$ 个打印操作，算法运行时间不随着 $n$ 增大而增长。我们称此算法的时间复杂度为“常数阶”。
+- 算法 `B` 中的打印操作需要循环 $n$ 次，算法运行时间随着 $n$ 增大呈线性增长。此算法的时间复杂度被称为“线性阶”。
+- 算法 `C` 中的打印操作需要循环 $1000000$ 次，虽然运行时间很长，但它与输入数据大小 $n$ 无关。因此 `C` 的时间复杂度和 `A` 相同，仍为“常数阶”。
 
-相比直接统计算法运行时间，时间复杂度分析的做法有什么好处呢？以及有什么不足？
+![算法 A、B 和 C 的时间增长趋势](time_complexity.assets/time_complexity_simple_example.png)
 
-**时间复杂度可以有效评估算法效率**。算法 `B` 运行时间的增长是线性的，在 $n > 1$ 时慢于算法 `A` ，在 $n > 1000000$ 时慢于算法 `C` 。实质上，只要输入数据大小 $n$ 足够大，复杂度为「常数阶」的算法一定优于「线性阶」的算法，这也正是时间增长趋势的含义。
+相较于直接统计算法的运行时间，时间复杂度分析有哪些特点呢？
 
-**时间复杂度的推算方法更加简便**。在时间复杂度分析中，我们可以将统计「计算操作的运行时间」简化为统计「计算操作的数量」，这是因为，无论是运行平台还是计算操作类型，都与算法运行时间的增长趋势无关。因而，我们可以简单地将所有计算操作的执行时间统一看作是相同的“单位时间”，这样的简化做法大大降低了估算难度。
-
-**时间复杂度也存在一定的局限性**。比如，虽然算法 `A` 和 `C` 的时间复杂度相同，但是实际的运行时间有非常大的差别。再比如，虽然算法 `B` 比 `C` 的时间复杂度要更高，但在输入数据大小 $n$ 比较小时，算法 `B` 是要明显优于算法 `C` 的。对于以上情况，我们很难仅凭时间复杂度来判定算法效率高低。然而，即使存在这些问题，计算复杂度仍然是评判算法效率的最有效且常用的方法。
+- **时间复杂度能够有效评估算法效率**。例如，算法 `B` 的运行时间呈线性增长，在 $n > 1$ 时比算法 `A` 更慢，在 $n > 1000000$ 时比算法 `C` 更慢。事实上，只要输入数据大小 $n$ 足够大，复杂度为“常数阶”的算法一定优于“线性阶”的算法，这正是时间增长趋势的含义。
+- **时间复杂度的推算方法更简便**。显然，运行平台和计算操作类型都与算法运行时间的增长趋势无关。因此在时间复杂度分析中，我们可以简单地将所有计算操作的执行时间视为相同的“单位时间”，从而将“计算操作运行时间统计”简化为“计算操作数量统计”，这样一来估算难度就大大降低了。
+- **时间复杂度也存在一定的局限性**。例如，尽管算法 `A` 和 `C` 的时间复杂度相同，但实际运行时间差别很大。同样，尽管算法 `B` 的时间复杂度比 `C` 高，但在输入数据大小 $n$ 较小时，算法 `B` 明显优于算法 `C` 。对于此类情况，我们时常难以仅凭时间复杂度判断算法效率的高低。当然，尽管存在上述问题，复杂度分析仍然是评判算法效率最有效且常用的方法。
 
 ## 函数渐近上界
 
-设算法「计算操作数量」为 $T(n)$ ，其是一个关于输入数据大小 $n$ 的函数。例如，以下算法的操作数量为
+给定一个输入大小为 $n$ 的函数：
 
-$$
-T(n) = 3 + 2n
-$$
+=== "Python"
 
-=== "Java"
-
-    ```java title=""
-    void algorithm(int n) {
-        int a = 1;  // +1
-        a = a + 1;  // +1
-        a = a * 2;  // +1
-        // 循环 n 次
-        for (int i = 0; i < n; i++) { // +1（每轮都执行 i ++）
-            System.out.println(0);    // +1
-        }
-    }
+    ```python title=""
+    def algorithm(n: int):
+        a = 1      # +1
+        a = a + 1  # +1
+        a = a * 2  # +1
+        # 循环 n 次
+        for i in range(n):  # +1
+            print(0)        # +1
     ```
 
 === "C++"
@@ -405,16 +566,32 @@ $$
     }
     ```
 
-=== "Python"
+=== "Java"
 
-    ```python title=""
-    def algorithm(n):
-        a = 1  # +1
-        a = a + 1  # +1
-        a = a * 2  # +1
-        # 循环 n 次
-        for i in range(n):  # +1
-            print(0)        # +1
+    ```java title=""
+    void algorithm(int n) {
+        int a = 1;  // +1
+        a = a + 1;  // +1
+        a = a * 2;  // +1
+        // 循环 n 次
+        for (int i = 0; i < n; i++) { // +1（每轮都执行 i ++）
+            System.out.println(0);    // +1
+        }
+    }
+    ```
+
+=== "C#"
+
+    ```csharp title=""
+    void Algorithm(int n) {
+        int a = 1;  // +1
+        a = a + 1;  // +1
+        a = a * 2;  // +1
+        // 循环 n 次
+        for (int i = 0; i < n; i++) {   // +1（每轮都执行 i ++）
+            Console.WriteLine(0);   // +1
+        }
+    }
     ```
 
 === "Go"
@@ -427,64 +604,6 @@ $$
         // 循环 n 次
         for i := 0; i < n; i++ {   // +1
             fmt.Println(a)         // +1
-        }
-    }
-    ```
-
-=== "JavaScript"
-
-    ```js title=""
-    function algorithm(n){
-        var a = 1; // +1
-        a += 1; // +1
-        a *= 2; // +1
-        // 循环 n 次
-        for(let i = 0; i < n; i++){ // +1（每轮都执行 i ++）
-            console.log(0); // +1
-        }
-
-    }
-    ```
-
-=== "TypeScript"
-
-    ```typescript title=""
-    function algorithm(n: number): void{
-        var a: number = 1; // +1
-        a += 1; // +1
-        a *= 2; // +1
-        // 循环 n 次
-        for(let i = 0; i < n; i++){ // +1（每轮都执行 i ++）
-            console.log(0); // +1
-        }
-
-    }
-    ```
-
-=== "C"
-
-    ```c title=""
-    void algorithm(int n) {
-        int a = 1;  // +1
-        a = a + 1;  // +1
-        a = a * 2;  // +1
-        // 循环 n 次
-        for (int i = 0; i < n; i++) {   // +1（每轮都执行 i ++）
-            printf("%d", 0);            // +1
-        }
-    }  
-    ```
-
-=== "C#"
-
-    ```csharp title=""
-    void algorithm(int n) {
-        int a = 1;  // +1
-        a = a + 1;  // +1
-        a = a * 2;  // +1
-        // 循环 n 次
-        for (int i = 0; i < n; i++) { // +1（每轮都执行 i ++）
-            Console.WriteLine(0);     // +1
         }
     }
     ```
@@ -503,74 +622,168 @@ $$
     }
     ```
 
-$T(n)$ 是个一次函数，说明时间增长趋势是线性的，因此易得时间复杂度是线性阶。
+=== "JS"
 
-我们将线性阶的时间复杂度记为 $O(n)$ ，这个数学符号被称为「大 $O$ 记号 Big-$O$ Notation」，代表函数 $T(n)$ 的「渐近上界 asymptotic upper bound」。
+    ```javascript title=""
+    function algorithm(n) {
+        var a = 1; // +1
+        a += 1; // +1
+        a *= 2; // +1
+        // 循环 n 次
+        for(let i = 0; i < n; i++){ // +1（每轮都执行 i ++）
+            console.log(0); // +1
+        }
+    }
+    ```
 
-我们要推算时间复杂度，本质上是在计算「操作数量函数 $T(n)$ 」的渐近上界。下面我们先来看看函数渐近上界的数学定义。
+=== "TS"
 
-!!! abstract "函数渐近上界"
+    ```typescript title=""
+    function algorithm(n: number): void{
+        var a: number = 1; // +1
+        a += 1; // +1
+        a *= 2; // +1
+        // 循环 n 次
+        for(let i = 0; i < n; i++){ // +1（每轮都执行 i ++）
+            console.log(0); // +1
+        }
+    }
+    ```
 
-    若存在正实数 $c$ 和实数 $n_0$ ，使得对于所有的 $n > n_0$ ，均有
-    $$
-    T(n) \leq c \cdot f(n)
-    $$
-    则可认为 $f(n)$ 给出了 $T(n)$ 的一个渐近上界，记为
-    $$
-    T(n) = O(f(n))
-    $$
+=== "Dart"
 
-![asymptotic_upper_bound](time_complexity.assets/asymptotic_upper_bound.png)
+    ```dart title=""
+    void algorithm(int n) {
+      int a = 1; // +1
+      a = a + 1; // +1
+      a = a * 2; // +1
+      // 循环 n 次
+      for (int i = 0; i < n; i++) { // +1（每轮都执行 i ++）
+        print(0); // +1
+      }
+    }
+    ```
 
-<p align="center"> Fig. 函数的渐近上界 </p>
+=== "Rust"
 
-本质上看，计算渐近上界就是在找一个函数 $f(n)$ ，**使得在 $n$ 趋向于无穷大时，$T(n)$ 和 $f(n)$ 处于相同的增长级别（仅相差一个常数项 $c$ 的倍数）**。
+    ```rust title=""
+    fn algorithm(n: i32) {
+        let mut a = 1;   // +1
+        a = a + 1;      // +1
+        a = a * 2;      // +1
 
-!!! tip
+        // 循环 n 次
+        for _ in 0..n { // +1（每轮都执行 i ++）
+            println!("{}", 0); // +1
+        }
+    }
+    ```
 
-    渐近上界的数学味儿有点重，如果你感觉没有完全理解，无需担心，因为在实际使用中我们只需要会推算即可，数学意义可以慢慢领悟。
+=== "C"
+
+    ```c title=""
+    void algorithm(int n) {
+        int a = 1;  // +1
+        a = a + 1;  // +1
+        a = a * 2;  // +1
+        // 循环 n 次
+        for (int i = 0; i < n; i++) {   // +1（每轮都执行 i ++）
+            printf("%d", 0);            // +1
+        }
+    }
+    ```
+
+=== "Kotlin"
+
+    ```kotlin title=""
+    fun algorithm(n: Int) {
+        var a = 1 // +1
+        a = a + 1 // +1
+        a = a * 2 // +1
+        // 循环 n 次
+        for (i in 0..<n) { // +1（每轮都执行 i ++）
+            println(0) // +1
+        }
+    }
+    ```
+
+=== "Ruby"
+
+    ```ruby title=""
+    def algorithm(n)
+        a = 1       # +1
+        a = a + 1   # +1
+        a = a * 2   # +1
+        # 循环 n 次
+        (0...n).each do # +1
+            puts 0      # +1
+        end
+    end
+    ```
+
+=== "Zig"
+
+    ```zig title=""
+    fn algorithm(n: usize) void {
+        var a: i32 = 1; // +1
+        a += 1; // +1
+        a *= 2; // +1
+        // 循环 n 次
+        for (0..n) |_| { // +1（每轮都执行 i ++）
+            std.debug.print("{}\n", .{0}); // +1
+        }
+    }
+    ```
+
+设算法的操作数量是一个关于输入数据大小 $n$ 的函数，记为 $T(n)$ ，则以上函数的操作数量为：
+
+$$
+T(n) = 3 + 2n
+$$
+
+$T(n)$ 是一次函数，说明其运行时间的增长趋势是线性的，因此它的时间复杂度是线性阶。
+
+我们将线性阶的时间复杂度记为 $O(n)$ ，这个数学符号称为<u>大 $O$ 记号（big-$O$ notation）</u>，表示函数 $T(n)$ 的<u>渐近上界（asymptotic upper bound）</u>。
+
+时间复杂度分析本质上是计算“操作数量 $T(n)$”的渐近上界，它具有明确的数学定义。
+
+!!! note "函数渐近上界"
+
+    若存在正实数 $c$ 和实数 $n_0$ ，使得对于所有的 $n > n_0$ ，均有 $T(n) \leq c \cdot f(n)$ ，则可认为 $f(n)$ 给出了 $T(n)$ 的一个渐近上界，记为 $T(n) = O(f(n))$ 。
+
+如下图所示，计算渐近上界就是寻找一个函数 $f(n)$ ，使得当 $n$ 趋向于无穷大时，$T(n)$ 和 $f(n)$ 处于相同的增长级别，仅相差一个常数项 $c$ 的倍数。
+
+![函数的渐近上界](time_complexity.assets/asymptotic_upper_bound.png)
 
 ## 推算方法
 
-推算出 $f(n)$ 后，我们就得到时间复杂度 $O(f(n))$ 。那么，如何来确定渐近上界 $f(n)$ 呢？总体分为两步，首先「统计操作数量」，然后「判断渐近上界」。
+渐近上界的数学味儿有点重，如果你感觉没有完全理解，也无须担心。我们可以先掌握推算方法，在不断的实践中，就可以逐渐领悟其数学意义。
 
-### 1. 统计操作数量
+根据定义，确定 $f(n)$ 之后，我们便可得到时间复杂度 $O(f(n))$ 。那么如何确定渐近上界 $f(n)$ 呢？总体分为两步：首先统计操作数量，然后判断渐近上界。
 
-对着代码，从上到下一行一行地计数即可。然而，**由于上述 $c \cdot f(n)$ 中的常数项 $c$ 可以取任意大小，因此操作数量 $T(n)$ 中的各种系数、常数项都可以被忽略**。根据此原则，可以总结出以下计数偷懒技巧：
+### 第一步：统计操作数量
 
-1. **跳过数量与 $n$ 无关的操作**。因为他们都是 $T(n)$ 中的常数项，对时间复杂度不产生影响。
-2. **省略所有系数**。例如，循环 $2n$ 次、$5n + 1$ 次、……，都可以化简记为 $n$ 次，因为 $n$ 前面的系数对时间复杂度也不产生影响。
-3. **循环嵌套时使用乘法**。总操作数量等于外层循环和内层循环操作数量之积，每一层循环依然可以分别套用上述 `1.` 和 `2.` 技巧。
+针对代码，逐行从上到下计算即可。然而，由于上述 $c \cdot f(n)$ 中的常数项 $c$ 可以取任意大小，**因此操作数量 $T(n)$ 中的各种系数、常数项都可以忽略**。根据此原则，可以总结出以下计数简化技巧。
 
-根据以下示例，使用上述技巧前、后的统计结果分别为
+1. **忽略 $T(n)$ 中的常数项**。因为它们都与 $n$ 无关，所以对时间复杂度不产生影响。
+2. **省略所有系数**。例如，循环 $2n$ 次、$5n + 1$ 次等，都可以简化记为 $n$ 次，因为 $n$ 前面的系数对时间复杂度没有影响。
+3. **循环嵌套时使用乘法**。总操作数量等于外层循环和内层循环操作数量之积，每一层循环依然可以分别套用第 `1.` 点和第 `2.` 点的技巧。
 
-$$
-\begin{aligned}
-T(n) & = 2n(n + 1) + (5n + 1) + 2 & \text{完整统计 (-.-|||)} \newline
-& = 2n^2 + 7n + 3 \newline
-T(n) & = n^2 + n & \text{偷懒统计 (o.O)}
-\end{aligned}
-$$
+给定一个函数，我们可以用上述技巧来统计操作数量：
 
-最终，两者都能推出相同的时间复杂度结果，即 $O(n^2)$ 。
+=== "Python"
 
-=== "Java"
-
-    ```java title=""
-    void algorithm(int n) {
-        int a = 1;  // +0（技巧 1）
-        a = a + n;  // +0（技巧 1）
-        // +n（技巧 2）
-        for (int i = 0; i < 5 * n + 1; i++) {
-            System.out.println(0);
-        }
-        // +n*n（技巧 3）
-        for (int i = 0; i < 2 * n; i++) {
-            for (int j = 0; j < n + 1; j++) {
-                System.out.println(0);
-            }
-        }
-    }
+    ```python title=""
+    def algorithm(n: int):
+        a = 1      # +0（技巧 1）
+        a = a + n  # +0（技巧 1）
+        # +n（技巧 2）
+        for i in range(5 * n + 1):
+            print(0)
+        # +n*n（技巧 3）
+        for i in range(2 * n):
+            for j in range(n + 1):
+                print(0)
     ```
 
 === "C++"
@@ -592,26 +805,49 @@ $$
     }
     ```
 
-=== "Python"
+=== "Java"
 
-    ```python title=""
-    def algorithm(n):
-        a = 1      # +0（技巧 1）
-        a = a + n  # +0（技巧 1）
-        # +n（技巧 2）
-        for i in range(5 * n + 1):
-            print(0)
-        # +n*n（技巧 3）
-        for i in range(2 * n):
-            for j in range(n + 1):
-                print(0)
+    ```java title=""
+    void algorithm(int n) {
+        int a = 1;  // +0（技巧 1）
+        a = a + n;  // +0（技巧 1）
+        // +n（技巧 2）
+        for (int i = 0; i < 5 * n + 1; i++) {
+            System.out.println(0);
+        }
+        // +n*n（技巧 3）
+        for (int i = 0; i < 2 * n; i++) {
+            for (int j = 0; j < n + 1; j++) {
+                System.out.println(0);
+            }
+        }
+    }
+    ```
+
+=== "C#"
+
+    ```csharp title=""
+    void Algorithm(int n) {
+        int a = 1;  // +0（技巧 1）
+        a = a + n;  // +0（技巧 1）
+        // +n（技巧 2）
+        for (int i = 0; i < 5 * n + 1; i++) {
+            Console.WriteLine(0);
+        }
+        // +n*n（技巧 3）
+        for (int i = 0; i < 2 * n; i++) {
+            for (int j = 0; j < n + 1; j++) {
+                Console.WriteLine(0);
+            }
+        }
+    }
     ```
 
 === "Go"
 
     ```go title=""
     func algorithm(n int) {
-        a := 1      // +0（技巧 1）
+        a := 1     // +0（技巧 1）
         a = a + n  // +0（技巧 1）
         // +n（技巧 2）
         for i := 0; i < 5 * n + 1; i++ {
@@ -621,86 +857,6 @@ $$
         for i := 0; i < 2 * n; i++ {
             for j := 0; j < n + 1; j++ {
                 fmt.Println(0)
-            }
-        }
-    }
-    ```
-
-=== "JavaScript"
-
-    ```js title=""
-    function algorithm(n) {
-        let a = 1;  // +0（技巧 1）
-        a = a + n;  // +0（技巧 1）
-        // +n（技巧 2）
-        for (let i = 0; i < 5 * n + 1; i++) {
-            console.log(0);
-        }
-        // +n*n（技巧 3）
-        for (let i = 0; i < 2 * n; i++) {
-            for (let j = 0; j < n + 1; j++) {
-                console.log(0);
-            }
-        }
-    }
-    ```
-
-=== "TypeScript"
-
-    ```typescript title=""
-    function algorithm(n: number): void {
-        let a = 1;  // +0（技巧 1）
-        a = a + n;  // +0（技巧 1）
-        // +n（技巧 2）
-        for (let i = 0; i < 5 * n + 1; i++) {
-            console.log(0);
-        }
-        // +n*n（技巧 3）
-        for (let i = 0; i < 2 * n; i++) {
-            for (let j = 0; j < n + 1; j++) {
-                console.log(0);
-            }
-        }
-    }
-    ```
-
-=== "C"
-
-    ```c title=""
-    void algorithm(int n) {
-        int a = 1;  // +0（技巧 1）
-        a = a + n;  // +0（技巧 1）
-        // +n（技巧 2）
-        for (int i = 0; i < 5 * n + 1; i++) {
-            printf("%d", 0);
-        }
-        // +n*n（技巧 3）
-        for (int i = 0; i < 2 * n; i++) {
-            for (int j = 0; j < n + 1; j++) {
-                printf("%d", 0);
-            }
-        }
-    }
-    ```
-
-=== "C#"
-
-    ```csharp title=""
-    void algorithm(int n)
-    {
-        int a = 1;  // +0（技巧 1）
-        a = a + n;  // +0（技巧 1）
-        // +n（技巧 2）
-        for (int i = 0; i < 5 * n + 1; i++)
-        {
-            Console.WriteLine(0);
-        }
-        // +n*n（技巧 3）
-        for (int i = 0; i < 2 * n; i++)
-        {
-            for (int j = 0; j < n + 1; j++)
-            {
-                Console.WriteLine(0);
             }
         }
     }
@@ -725,15 +881,177 @@ $$
     }
     ```
 
-### 2. 判断渐近上界
+=== "JS"
 
-**时间复杂度由多项式 $T(n)$ 中最高阶的项来决定**。这是因为在 $n$ 趋于无穷大时，最高阶的项将处于主导作用，其它项的影响都可以被忽略。
+    ```javascript title=""
+    function algorithm(n) {
+        let a = 1;  // +0（技巧 1）
+        a = a + n;  // +0（技巧 1）
+        // +n（技巧 2）
+        for (let i = 0; i < 5 * n + 1; i++) {
+            console.log(0);
+        }
+        // +n*n（技巧 3）
+        for (let i = 0; i < 2 * n; i++) {
+            for (let j = 0; j < n + 1; j++) {
+                console.log(0);
+            }
+        }
+    }
+    ```
 
-以下表格给出了一些例子，其中有一些夸张的值，是想要向大家强调 **系数无法撼动阶数** 这一结论。在 $n$ 趋于无穷大时，这些常数都是“浮云”。
+=== "TS"
 
-<div class="center-table" markdown>
+    ```typescript title=""
+    function algorithm(n: number): void {
+        let a = 1;  // +0（技巧 1）
+        a = a + n;  // +0（技巧 1）
+        // +n（技巧 2）
+        for (let i = 0; i < 5 * n + 1; i++) {
+            console.log(0);
+        }
+        // +n*n（技巧 3）
+        for (let i = 0; i < 2 * n; i++) {
+            for (let j = 0; j < n + 1; j++) {
+                console.log(0);
+            }
+        }
+    }
+    ```
 
-| 操作数量 $T(n)$         | 时间复杂度 $O(f(n))$   |
+=== "Dart"
+
+    ```dart title=""
+    void algorithm(int n) {
+      int a = 1; // +0（技巧 1）
+      a = a + n; // +0（技巧 1）
+      // +n（技巧 2）
+      for (int i = 0; i < 5 * n + 1; i++) {
+        print(0);
+      }
+      // +n*n（技巧 3）
+      for (int i = 0; i < 2 * n; i++) {
+        for (int j = 0; j < n + 1; j++) {
+          print(0);
+        }
+      }
+    }
+    ```
+
+=== "Rust"
+
+    ```rust title=""
+    fn algorithm(n: i32) {
+        let mut a = 1;     // +0（技巧 1）
+        a = a + n;        // +0（技巧 1）
+
+        // +n（技巧 2）
+        for i in 0..(5 * n + 1) {
+            println!("{}", 0);
+        }
+
+        // +n*n（技巧 3）
+        for i in 0..(2 * n) {
+            for j in 0..(n + 1) {
+                println!("{}", 0);
+            }
+        }
+    }
+    ```
+
+=== "C"
+
+    ```c title=""
+    void algorithm(int n) {
+        int a = 1;  // +0（技巧 1）
+        a = a + n;  // +0（技巧 1）
+        // +n（技巧 2）
+        for (int i = 0; i < 5 * n + 1; i++) {
+            printf("%d", 0);
+        }
+        // +n*n（技巧 3）
+        for (int i = 0; i < 2 * n; i++) {
+            for (int j = 0; j < n + 1; j++) {
+                printf("%d", 0);
+            }
+        }
+    }
+    ```
+
+=== "Kotlin"
+
+    ```kotlin title=""
+    fun algorithm(n: Int) {
+        var a = 1   // +0（技巧 1）
+        a = a + n   // +0（技巧 1）
+        // +n（技巧 2）
+        for (i in 0..<5 * n + 1) {
+            println(0)
+        }
+        // +n*n（技巧 3）
+        for (i in 0..<2 * n) {
+            for (j in 0..<n + 1) {
+                println(0)
+            }
+        }
+    }
+    ```
+
+=== "Ruby"
+
+    ```ruby title=""
+    def algorithm(n)
+        a = 1       # +0（技巧 1）
+        a = a + n   # +0（技巧 1）
+        # +n（技巧 2）
+        (0...(5 * n + 1)).each do { puts 0 }
+        # +n*n（技巧 3）
+        (0...(2 * n)).each do
+            (0...(n + 1)).each do { puts 0 }
+        end
+    end
+    ```
+
+=== "Zig"
+
+    ```zig title=""
+    fn algorithm(n: usize) void {
+        var a: i32 = 1;     // +0（技巧 1）
+        a = a + @as(i32, @intCast(n));        // +0（技巧 1）
+
+        // +n（技巧 2）
+        for(0..(5 * n + 1)) |_| {
+            std.debug.print("{}\n", .{0});
+        }
+
+        // +n*n（技巧 3）
+        for(0..(2 * n)) |_| {
+            for(0..(n + 1)) |_| {
+                std.debug.print("{}\n", .{0});
+            }
+        }
+    }
+    ```
+
+以下公式展示了使用上述技巧前后的统计结果，两者推算出的时间复杂度都为 $O(n^2)$ 。
+
+$$
+\begin{aligned}
+T(n) & = 2n(n + 1) + (5n + 1) + 2 & \text{完整统计 (-.-|||)} \newline
+& = 2n^2 + 7n + 3 \newline
+T(n) & = n^2 + n & \text{偷懒统计 (o.O)}
+\end{aligned}
+$$
+
+### 第二步：判断渐近上界
+
+**时间复杂度由 $T(n)$ 中最高阶的项来决定**。这是因为在 $n$ 趋于无穷大时，最高阶的项将发挥主导作用，其他项的影响都可以忽略。
+
+下表展示了一些例子，其中一些夸张的值是为了强调“系数无法撼动阶数”这一结论。当 $n$ 趋于无穷大时，这些常数变得无足轻重。
+
+<p align="center"> 表 <id> &nbsp; 不同操作数量对应的时间复杂度 </p>
+
+| 操作数量 $T(n)$        | 时间复杂度 $O(f(n))$ |
 | ---------------------- | -------------------- |
 | $100000$               | $O(1)$               |
 | $3n + 2$               | $O(n)$               |
@@ -741,11 +1059,9 @@ $$
 | $n^3 + 10000n^2$       | $O(n^3)$             |
 | $2^n + 10000n^{10000}$ | $O(2^n)$             |
 
-</div>
-
 ## 常见类型
 
-设输入数据大小为 $n$ ，常见的时间复杂度类型有（从低到高排列）
+设输入数据大小为 $n$ ，常见的时间复杂度类型如下图所示（按照从低到高的顺序排列）。
 
 $$
 \begin{aligned}
@@ -754,1951 +1070,155 @@ O(1) < O(\log n) < O(n) < O(n \log n) < O(n^2) < O(2^n) < O(n!) \newline
 \end{aligned}
 $$
 
-![time_complexity_common_types](time_complexity.assets/time_complexity_common_types.png)
-
-<p align="center"> Fig. 时间复杂度的常见类型 </p>
-
-!!! tip
-
-    部分示例代码需要一些前置知识，包括数组、递归算法等。如果遇到看不懂的地方无需担心，可以在学习完后面章节后再来复习，现阶段先聚焦在理解时间复杂度含义和推算方法上。
+![常见的时间复杂度类型](time_complexity.assets/time_complexity_common_types.png)
 
 ### 常数阶 $O(1)$
 
 常数阶的操作数量与输入数据大小 $n$ 无关，即不随着 $n$ 的变化而变化。
 
-对于以下算法，无论操作数量 `size` 有多大，只要与数据大小 $n$ 无关，时间复杂度就仍为 $O(1)$ 。
+在以下函数中，尽管操作数量 `size` 可能很大，但由于其与输入数据大小 $n$ 无关，因此时间复杂度仍为 $O(1)$ ：
 
-=== "Java"
-
-    ```java title="time_complexity.java"
-    /* 常数阶 */
-    int constant(int n) {
-        int count = 0;
-        int size = 100000;
-        for (int i = 0; i < size; i++)
-            count++;
-        return count;
-    }
-    ```
-
-=== "C++"
-
-    ```cpp title="time_complexity.cpp"
-    /* 常数阶 */
-    int constant(int n) {
-        int count = 0;
-        int size = 100000;
-        for (int i = 0; i < size; i++)
-            count++;
-        return count;
-    }
-    ```
-
-=== "Python"
-
-    ```python title="time_complexity.py"
-    """ 常数阶 """
-    def constant(n):
-        count = 0
-        size = 100000
-        for _ in range(size):
-            count += 1
-        return count
-    ```
-
-=== "Go"
-
-    ```go title="time_complexity.go"
-    /* 常数阶 */
-    func constant(n int) int {
-        count := 0
-        size := 100000
-        for i := 0; i < size; i++ {
-            count ++
-        }
-        return count
-    }
-    ```
-
-=== "JavaScript"
-
-    ```js title="time_complexity.js"
-    /* 常数阶 */
-    function constant(n) {
-        let count = 0;
-        const size = 100000;
-        for (let i = 0; i < size; i++) count++;
-        return count;
-    }
-    ```
-
-=== "TypeScript"
-
-    ```typescript title="time_complexity.ts"
-    /* 常数阶 */
-    function constant(n: number): number {
-        let count = 0;
-        const size = 100000;
-        for (let i = 0; i < size; i++) count++;
-        return count;
-    }
-    ```
-
-=== "C"
-
-    ```c title="time_complexity.c"
-    /* 常数阶 */
-    int constant(int n) {
-        int count = 0;
-        int size = 100000;
-        int i = 0;
-        for (int i = 0; i < size; i++) {
-            count ++;
-        }
-        return count;
-    }
-    ```
-
-=== "C#"
-
-    ```csharp title="time_complexity.cs"
-    /* 常数阶 */
-    int constant(int n)
-    {
-        int count = 0;
-        int size = 100000;
-        for (int i = 0; i < size; i++)
-            count++;
-        return count;
-    }
-    ```
-
-=== "Swift"
-
-    ```swift title="time_complexity.swift"
-    /* 常数阶 */
-    func constant(n: Int) -> Int {
-        var count = 0
-        let size = 100000
-        for _ in 0 ..< size {
-            count += 1
-        }
-        return count
-    }
-    ```
+```src
+[file]{time_complexity}-[class]{}-[func]{constant}
+```
 
 ### 线性阶 $O(n)$
 
-线性阶的操作数量相对输入数据大小成线性级别增长。线性阶常出现于单层循环。
+线性阶的操作数量相对于输入数据大小 $n$ 以线性级别增长。线性阶通常出现在单层循环中：
 
-=== "Java"
+```src
+[file]{time_complexity}-[class]{}-[func]{linear}
+```
 
-    ```java title="time_complexity.java"
-    /* 线性阶 */
-    int linear(int n) {
-        int count = 0;
-        for (int i = 0; i < n; i++)
-            count++;
-        return count;
-    }
-    ```
+遍历数组和遍历链表等操作的时间复杂度均为 $O(n)$ ，其中 $n$ 为数组或链表的长度：
 
-=== "C++"
+```src
+[file]{time_complexity}-[class]{}-[func]{array_traversal}
+```
 
-    ```cpp title="time_complexity.cpp"
-    /* 线性阶 */
-    int linear(int n) {
-        int count = 0;
-        for (int i = 0; i < n; i++)
-            count++;
-        return count;
-    }
-    ```
-
-=== "Python"
-
-    ```python title="time_complexity.py"
-    """ 线性阶 """
-    def linear(n):
-        count = 0
-        for _ in range(n):
-            count += 1
-        return count
-    ```
-
-=== "Go"
-
-    ```go title="time_complexity.go"
-    /* 线性阶 */
-    func linear(n int) int {
-        count := 0
-        for i := 0; i < n; i++ {
-            count++
-        }
-        return count
-    }
-    ```
-
-=== "JavaScript"
-
-    ```js title="time_complexity.js"
-    /* 线性阶 */
-    function linear(n) {
-        let count = 0;
-        for (let i = 0; i < n; i++) count++;
-        return count;
-    }
-    ```
-
-=== "TypeScript"
-
-    ```typescript title="time_complexity.ts"
-    /* 线性阶 */
-    function linear(n: number): number {
-        let count = 0;
-        for (let i = 0; i < n; i++) count++;
-        return count;
-    }
-    ```
-
-=== "C"
-
-    ```c title="time_complexity.c"
-    /* 线性阶 */
-    int linear(int n) {
-        int count = 0;
-        for (int i = 0; i < n; i++) {
-            count ++;
-        }
-        return count;
-    }
-    ```
-
-=== "C#"
-
-    ```csharp title="time_complexity.cs"
-    /* 线性阶 */
-    int linear(int n)
-    {
-        int count = 0;
-        for (int i = 0; i < n; i++)
-            count++;
-        return count;
-    }
-    ```
-
-=== "Swift"
-
-    ```swift title="time_complexity.swift"
-    /* 线性阶 */
-    func linear(n: Int) -> Int {
-        var count = 0
-        for _ in 0 ..< n {
-            count += 1
-        }
-        return count
-    }
-    ```
-
-「遍历数组」和「遍历链表」等操作，时间复杂度都为 $O(n)$ ，其中 $n$ 为数组或链表的长度。
-
-!!! tip
-
-    **数据大小 $n$ 是根据输入数据的类型来确定的**。比如，在上述示例中，我们直接将 $n$ 看作输入数据大小；以下遍历数组示例中，数据大小 $n$ 为数组的长度。
-
-=== "Java"
-
-    ```java title="time_complexity.java"
-    /* 线性阶（遍历数组） */
-    int arrayTraversal(int[] nums) {
-        int count = 0;
-        // 循环次数与数组长度成正比
-        for (int num : nums) {
-            count++;
-        }
-        return count;
-    }
-    ```
-
-=== "C++"
-
-    ```cpp title="time_complexity.cpp"
-    /* 线性阶（遍历数组） */
-    int arrayTraversal(vector<int>& nums) {
-        int count = 0;
-        // 循环次数与数组长度成正比
-        for (int num : nums) {
-            count++;
-        }
-        return count;
-    }
-    ```
-
-=== "Python"
-
-    ```python title="time_complexity.py"
-    """ 线性阶（遍历数组）"""
-    def array_traversal(nums):
-        count = 0
-        # 循环次数与数组长度成正比
-        for num in nums:
-            count += 1
-        return count
-    ```
-
-=== "Go"
-
-    ```go title="time_complexity.go"
-    /* 线性阶（遍历数组） */
-    func arrayTraversal(nums []int) int {
-        count := 0
-        // 循环次数与数组长度成正比
-        for range nums {
-            count++
-        }
-        return count
-    }
-    ```
-
-=== "JavaScript"
-
-    ```js title="time_complexity.js"
-    /* 线性阶（遍历数组） */
-    function arrayTraversal(nums) {
-        let count = 0;
-        // 循环次数与数组长度成正比
-        for (let i = 0; i < nums.length; i++) {
-            count++;
-        }
-        return count;
-    }
-    ```
-
-=== "TypeScript"
-
-    ```typescript title="time_complexity.ts"
-    /* 线性阶（遍历数组） */
-    function arrayTraversal(nums: number[]): number {
-        let count = 0;
-        // 循环次数与数组长度成正比
-        for (let i = 0; i < nums.length; i++) {
-            count++;
-        }
-        return count;
-    }
-    ```
-
-=== "C"
-
-    ```c title="time_complexity.c"
-    /* 线性阶（遍历数组） */
-    int arrayTraversal(int *nums, int n) {
-        int count = 0;
-        // 循环次数与数组长度成正比
-        for (int i = 0; i < n; i++) {
-            count ++;
-        }
-        return count;
-    }
-    ```
-
-=== "C#"
-
-    ```csharp title="time_complexity.cs"
-    /* 线性阶（遍历数组） */
-    int arrayTraversal(int[] nums)
-    {
-        int count = 0;
-        // 循环次数与数组长度成正比
-        foreach(int num in nums)
-        {
-            count++;
-        }
-        return count;
-    }
-    ```
-
-=== "Swift"
-
-    ```swift title="time_complexity.swift"
-    /* 线性阶（遍历数组） */
-    func arrayTraversal(nums: [Int]) -> Int {
-        var count = 0
-        // 循环次数与数组长度成正比
-        for _ in nums {
-            count += 1
-        }
-        return count
-    }
-    ```
+值得注意的是，**输入数据大小 $n$ 需根据输入数据的类型来具体确定**。比如在第一个示例中，变量 $n$ 为输入数据大小；在第二个示例中，数组长度 $n$ 为数据大小。
 
 ### 平方阶 $O(n^2)$
 
-平方阶的操作数量相对输入数据大小成平方级别增长。平方阶常出现于嵌套循环，外层循环和内层循环都为 $O(n)$ ，总体为 $O(n^2)$ 。
+平方阶的操作数量相对于输入数据大小 $n$ 以平方级别增长。平方阶通常出现在嵌套循环中，外层循环和内层循环的时间复杂度都为 $O(n)$ ，因此总体的时间复杂度为 $O(n^2)$ ：
 
-=== "Java"
+```src
+[file]{time_complexity}-[class]{}-[func]{quadratic}
+```
 
-    ```java title="time_complexity.java"
-    /* 平方阶 */
-    int quadratic(int n) {
-        int count = 0;
-        // 循环次数与数组长度成平方关系
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < n; j++) {
-                count++;
-            }
-        }
-        return count;
-    }
-    ```
+下图对比了常数阶、线性阶和平方阶三种时间复杂度。
 
-=== "C++"
+![常数阶、线性阶和平方阶的时间复杂度](time_complexity.assets/time_complexity_constant_linear_quadratic.png)
 
-    ```cpp title="time_complexity.cpp"
-    /* 平方阶 */
-    int quadratic(int n) {
-        int count = 0;
-        // 循环次数与数组长度成平方关系
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < n; j++) {
-                count++;
-            }
-        }
-        return count;
-    }
-    ```
+以冒泡排序为例，外层循环执行 $n - 1$ 次，内层循环执行 $n-1$、$n-2$、$\dots$、$2$、$1$ 次，平均为 $n / 2$ 次，因此时间复杂度为 $O((n - 1) n / 2) = O(n^2)$ ：
 
-=== "Python"
-
-    ```python title="time_complexity.py"
-    """ 平方阶 """
-    def quadratic(n):
-        count = 0
-        # 循环次数与数组长度成平方关系
-        for i in range(n):
-            for j in range(n):
-                count += 1
-        return count
-    ```
-
-=== "Go"
-
-    ```go title="time_complexity.go"
-    /* 平方阶 */
-    func quadratic(n int) int {
-        count := 0
-        // 循环次数与数组长度成平方关系
-        for i := 0; i < n; i++ {
-            for j := 0; j < n; j++ {
-                count++
-            }
-        }
-        return count
-    }
-    ```
-
-=== "JavaScript"
-
-    ```js title="time_complexity.js"
-    /* 平方阶 */
-    function quadratic(n) {
-        let count = 0;
-        // 循环次数与数组长度成平方关系
-        for (let i = 0; i < n; i++) {
-            for (let j = 0; j < n; j++) {
-                count++;
-            }
-        }
-        return count;
-    }
-    ```
-
-=== "TypeScript"
-
-    ```typescript title="time_complexity.ts"
-    /* 平方阶 */
-    function quadratic(n: number): number {
-        let count = 0;
-        // 循环次数与数组长度成平方关系
-        for (let i = 0; i < n; i++) {
-            for (let j = 0; j < n; j++) {
-                count++;
-            }
-        }
-        return count;
-    }
-    ```
-
-=== "C"
-
-    ```c title="time_complexity.c"
-    /* 平方阶 */
-    int quadratic(int n) {
-        int count = 0;
-        // 循环次数与数组长度成平方关系
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < n; j++) {
-                count ++;
-            }
-        }
-        return count;
-    }
-    ```
-
-=== "C#"
-
-    ```csharp title="time_complexity.cs"
-    /* 平方阶 */
-    int quadratic(int n)
-    {
-        int count = 0;
-        // 循环次数与数组长度成平方关系
-        for (int i = 0; i < n; i++)
-        {
-            for (int j = 0; j < n; j++)
-            {
-                count++;
-            }
-        }
-        return count;
-    }
-    ```
-
-=== "Swift"
-
-    ```swift title="time_complexity.swift"
-    /* 平方阶 */
-    func quadratic(n: Int) -> Int {
-        var count = 0
-        // 循环次数与数组长度成平方关系
-        for _ in 0 ..< n {
-            for _ in 0 ..< n {
-                count += 1
-            }
-        }
-        return count
-    }
-    ```
-
-![time_complexity_constant_linear_quadratic](time_complexity.assets/time_complexity_constant_linear_quadratic.png)
-
-<p align="center"> Fig. 常数阶、线性阶、平方阶的时间复杂度 </p>
-
-以「冒泡排序」为例，外层循环 $n - 1$ 次，内层循环 $n-1, n-2, \cdots, 2, 1$ 次，平均为 $\frac{n}{2}$ 次，因此时间复杂度为 $O(n^2)$ 。
-
-$$
-O((n - 1) \frac{n}{2}) = O(n^2)
-$$
-
-=== "Java"
-
-    ```java title="time_complexity.java"
-    /* 平方阶（冒泡排序） */
-    int bubbleSort(int[] nums) {
-        int count = 0;  // 计数器
-        // 外循环：待排序元素数量为 n-1, n-2, ..., 1
-        for (int i = nums.length - 1; i > 0; i--) {
-            // 内循环：冒泡操作
-            for (int j = 0; j < i; j++) {
-                if (nums[j] > nums[j + 1]) {
-                    // 交换 nums[j] 与 nums[j + 1]
-                    int tmp = nums[j];
-                    nums[j] = nums[j + 1];
-                    nums[j + 1] = tmp;
-                    count += 3;  // 元素交换包含 3 个单元操作
-                }
-            }
-        }
-        return count;
-    }
-    ```
-
-=== "C++"
-
-    ```cpp title="time_complexity.cpp"
-    /* 平方阶（冒泡排序） */
-    int bubbleSort(vector<int>& nums) {
-        int count = 0;  // 计数器
-        // 外循环：待排序元素数量为 n-1, n-2, ..., 1
-        for (int i = nums.size() - 1; i > 0; i--) {
-            // 内循环：冒泡操作
-            for (int j = 0; j < i; j++) {
-                if (nums[j] > nums[j + 1]) {
-                    // 交换 nums[j] 与 nums[j + 1]
-                    int tmp = nums[j];
-                    nums[j] = nums[j + 1];
-                    nums[j + 1] = tmp;
-                    count += 3;  // 元素交换包含 3 个单元操作
-                }
-            }
-        }
-        return count;
-    }
-    ```
-
-=== "Python"
-
-    ```python title="time_complexity.py"
-    """ 平方阶（冒泡排序）"""
-    def bubble_sort(nums):
-        count = 0  # 计数器
-        # 外循环：待排序元素数量为 n-1, n-2, ..., 1
-        for i in range(len(nums) - 1, 0, -1):
-            # 内循环：冒泡操作
-            for j in range(i):
-                if nums[j] > nums[j + 1]:
-                    # 交换 nums[j] 与 nums[j + 1]
-                    tmp = nums[j]
-                    nums[j] = nums[j + 1]
-                    nums[j + 1] = tmp
-                    count += 3  # 元素交换包含 3 个单元操作
-        return count
-    ```
-
-=== "Go"
-
-    ```go title="time_complexity.go"
-     /* 平方阶（冒泡排序） */
-     func bubbleSort(nums []int) int {
-        count := 0 // 计数器
-        // 外循环：待排序元素数量为 n-1, n-2, ..., 1
-        for i := len(nums) - 1; i > 0; i-- {
-            // 内循环：冒泡操作
-            for j := 0; j < i; j++ {
-                if nums[j] > nums[j+1] {
-                    // 交换 nums[j] 与 nums[j + 1]
-                    tmp := nums[j]
-                    nums[j] = nums[j+1]
-                    nums[j+1] = tmp
-                    count += 3 // 元素交换包含 3 个单元操作
-                }
-            }
-        }
-        return count
-    }
-    ```
-
-=== "JavaScript"
-
-    ```js title="time_complexity.js"
-    /* 平方阶（冒泡排序） */
-    function bubbleSort(nums) {
-        let count = 0; // 计数器
-        // 外循环：待排序元素数量为 n-1, n-2, ..., 1
-        for (let i = nums.length - 1; i > 0; i--) {
-            // 内循环：冒泡操作
-            for (let j = 0; j < i; j++) {
-                if (nums[j] > nums[j + 1]) {
-                    // 交换 nums[j] 与 nums[j + 1]
-                    let tmp = nums[j];
-                    nums[j] = nums[j + 1];
-                    nums[j + 1] = tmp;
-                    count += 3; // 元素交换包含 3 个单元操作
-                }
-            }
-        }
-        return count;
-    }
-    ```
-
-=== "TypeScript"
-
-    ```typescript title="time_complexity.ts"
-    /* 平方阶（冒泡排序） */
-    function bubbleSort(nums: number[]): number {
-        let count = 0; // 计数器
-        // 外循环：待排序元素数量为 n-1, n-2, ..., 1
-        for (let i = nums.length - 1; i > 0; i--) {
-            // 内循环：冒泡操作
-            for (let j = 0; j < i; j++) {
-                if (nums[j] > nums[j + 1]) {
-                    // 交换 nums[j] 与 nums[j + 1]
-                    let tmp = nums[j];
-                    nums[j] = nums[j + 1];
-                    nums[j + 1] = tmp;
-                    count += 3; // 元素交换包含 3 个单元操作
-                }
-            }
-        }
-        return count;
-    }
-    ```
-
-=== "C"
-
-    ```c title="time_complexity.c"
-    /* 平方阶（冒泡排序） */
-    int bubbleSort(int *nums, int n) {
-        int count = 0;  // 计数器 
-        // 外循环：待排序元素数量为 n-1, n-2, ..., 1
-        for (int i = n - 1; i > 0; i--) {
-            // 内循环：冒泡操作
-            for (int j = 0; j < i; j++) {
-                // 交换 nums[j] 与 nums[j + 1]
-                int tmp = nums[j];
-                nums[j] = nums[j + 1];
-                nums[j + 1] = tmp;
-                count += 3;  // 元素交换包含 3 个单元操作
-            }
-            
-        }
-        return count;
-    }
-    ```
-
-=== "C#"
-
-    ```csharp title="time_complexity.cs"
-    /* 平方阶（冒泡排序） */
-    int bubbleSort(int[] nums)
-    {
-        int count = 0;  // 计数器
-                        // 外循环：待排序元素数量为 n-1, n-2, ..., 1
-        for (int i = nums.Length - 1; i > 0; i--)
-        {
-            // 内循环：冒泡操作
-            for (int j = 0; j < i; j++)
-            {
-                if (nums[j] > nums[j + 1])
-                {
-                    // 交换 nums[j] 与 nums[j + 1]
-                    int tmp = nums[j];
-                    nums[j] = nums[j + 1];
-                    nums[j + 1] = tmp;
-                    count += 3;  // 元素交换包含 3 个单元操作
-                }
-            }
-        }
-        return count;
-    }
-
-    ```
-
-=== "Swift"
-
-    ```swift title="time_complexity.swift"
-    /* 平方阶（冒泡排序） */
-    func bubbleSort(nums: inout [Int]) -> Int {
-        var count = 0 // 计数器
-        // 外循环：待排序元素数量为 n-1, n-2, ..., 1
-        for i in sequence(first: nums.count - 1, next: { $0 > 0 ? $0 - 1 : nil }) {
-            // 内循环：冒泡操作
-            for j in 0 ..< i {
-                if nums[j] > nums[j + 1] {
-                    // 交换 nums[j] 与 nums[j + 1]
-                    let tmp = nums[j]
-                    nums[j] = nums[j + 1]
-                    nums[j + 1] = tmp
-                    count += 3 // 元素交换包含 3 个单元操作
-                }
-            }
-        }
-        return count
-    }
-    ```
+```src
+[file]{time_complexity}-[class]{}-[func]{bubble_sort}
+```
 
 ### 指数阶 $O(2^n)$
 
-!!! note
+生物学的“细胞分裂”是指数阶增长的典型例子：初始状态为 $1$ 个细胞，分裂一轮后变为 $2$ 个，分裂两轮后变为 $4$ 个，以此类推，分裂 $n$ 轮后有 $2^n$ 个细胞。
 
-    生物学科中的“细胞分裂”即是指数阶增长：初始状态为 $1$ 个细胞，分裂一轮后为 $2$ 个，分裂两轮后为 $4$ 个，……，分裂 $n$ 轮后有 $2^n$ 个细胞。
+下图和以下代码模拟了细胞分裂的过程，时间复杂度为 $O(2^n)$ 。请注意，输入 $n$ 表示分裂轮数，返回值 `count` 表示总分裂次数。
 
-指数阶增长得非常快，在实际应用中一般是不能被接受的。若一个问题使用「暴力枚举」求解的时间复杂度是 $O(2^n)$ ，那么一般都需要使用「动态规划」或「贪心算法」等算法来求解。
+```src
+[file]{time_complexity}-[class]{}-[func]{exponential}
+```
 
-=== "Java"
+![指数阶的时间复杂度](time_complexity.assets/time_complexity_exponential.png)
 
-    ```java title="time_complexity.java"
-    /* 指数阶（循环实现） */
-    int exponential(int n) {
-        int count = 0, base = 1;
-        // cell 每轮一分为二，形成数列 1, 2, 4, 8, ..., 2^(n-1)
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < base; j++) {
-                count++;
-            }
-            base *= 2;
-        }
-        // count = 1 + 2 + 4 + 8 + .. + 2^(n-1) = 2^n - 1
-        return count;
-    }
-    ```
+在实际算法中，指数阶常出现于递归函数中。例如在以下代码中，其递归地一分为二，经过 $n$ 次分裂后停止：
 
-=== "C++"
+```src
+[file]{time_complexity}-[class]{}-[func]{exp_recur}
+```
 
-    ```cpp title="time_complexity.cpp"
-    /* 指数阶（循环实现） */
-    int exponential(int n) {
-        int count = 0, base = 1;
-        // cell 每轮一分为二，形成数列 1, 2, 4, 8, ..., 2^(n-1)
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < base; j++) {
-                count++;
-            }
-            base *= 2;
-        }
-        // count = 1 + 2 + 4 + 8 + .. + 2^(n-1) = 2^n - 1
-        return count;
-    }
-    ```
-
-=== "Python"
-
-    ```python title="time_complexity.py"
-    """ 指数阶（循环实现）"""
-    def exponential(n):
-        count, base = 0, 1
-        # cell 每轮一分为二，形成数列 1, 2, 4, 8, ..., 2^(n-1)
-        for _ in range(n):
-            for _ in range(base):
-                count += 1
-            base *= 2
-        # count = 1 + 2 + 4 + 8 + .. + 2^(n-1) = 2^n - 1
-        return count
-    ```
-
-=== "Go"
-
-    ```go title="time_complexity.go"
-    /* 指数阶（循环实现）*/
-    func exponential(n int) int {
-        count, base := 0, 1
-        // cell 每轮一分为二，形成数列 1, 2, 4, 8, ..., 2^(n-1)
-        for i := 0; i < n; i++ {
-            for j := 0; j < base; j++ {
-                count++
-            }
-            base *= 2
-        }
-        // count = 1 + 2 + 4 + 8 + .. + 2^(n-1) = 2^n - 1
-        return count
-    }
-    ```
-
-=== "JavaScript"
-
-    ```js title="time_complexity.js"
-    /* 指数阶（循环实现） */
-    function exponential(n) {
-        let count = 0,
-            base = 1;
-        // cell 每轮一分为二，形成数列 1, 2, 4, 8, ..., 2^(n-1)
-        for (let i = 0; i < n; i++) {
-            for (let j = 0; j < base; j++) {
-                count++;
-            }
-            base *= 2;
-        }
-        // count = 1 + 2 + 4 + 8 + .. + 2^(n-1) = 2^n - 1
-        return count;
-    }
-
-    ```
-
-=== "TypeScript"
-
-    ```typescript title="time_complexity.ts"
-    /* 指数阶（循环实现） */
-    function exponential(n: number): number {
-        let count = 0,
-            base = 1;
-        // cell 每轮一分为二，形成数列 1, 2, 4, 8, ..., 2^(n-1)
-        for (let i = 0; i < n; i++) {
-            for (let j = 0; j < base; j++) {
-                count++;
-            }
-            base *= 2;
-        }
-        // count = 1 + 2 + 4 + 8 + .. + 2^(n-1) = 2^n - 1
-        return count;
-    }
-    ```
-
-=== "C"
-
-    ```c title="time_complexity.c"
-    /* 指数阶（循环实现） */
-    int exponential(int n) {
-        int count = 0;
-        int bas = 1;
-        // cell 每轮一分为二，形成数列 1, 2, 4, 8, ..., 2^(n-1)
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < bas; j++) {
-                count++;
-            }
-            bas *= 2;
-        }
-        // count = 1 + 2 + 4 + 8 + .. + 2^(n-1) = 2^n - 1
-        return count;
-    }
-    ```
-
-=== "C#"
-
-    ```csharp title="time_complexity.cs"
-    /* 指数阶（循环实现） */
-    int exponential(int n)
-    {
-        int count = 0, bas = 1;
-        // cell 每轮一分为二，形成数列 1, 2, 4, 8, ..., 2^(n-1)
-        for (int i = 0; i < n; i++)
-        {
-            for (int j = 0; j < bas; j++)
-            {
-                count++;
-            }
-            bas *= 2;
-        }
-        // count = 1 + 2 + 4 + 8 + .. + 2^(n-1) = 2^n - 1
-        return count;
-    }
-    ```
-
-=== "Swift"
-
-    ```swift title="time_complexity.swift"
-    /* 指数阶（循环实现） */
-    func exponential(n: Int) -> Int {
-        var count = 0
-        var base = 1
-        // cell 每轮一分为二，形成数列 1, 2, 4, 8, ..., 2^(n-1)
-        for _ in 0 ..< n {
-            for _ in 0 ..< base {
-                count += 1
-            }
-            base *= 2
-        }
-        // count = 1 + 2 + 4 + 8 + .. + 2^(n-1) = 2^n - 1
-        return count
-    }
-    ```
-
-![time_complexity_exponential](time_complexity.assets/time_complexity_exponential.png)
-
-<p align="center"> Fig. 指数阶的时间复杂度 </p>
-
-在实际算法中，指数阶常出现于递归函数。例如以下代码，不断地一分为二，分裂 $n$ 次后停止。
-
-=== "Java"
-
-    ```java title="time_complexity.java"
-    /* 指数阶（递归实现） */
-    int expRecur(int n) {
-        if (n == 1) return 1;
-        return expRecur(n - 1) + expRecur(n - 1) + 1;
-    }
-    ```
-
-=== "C++"
-
-    ```cpp title="time_complexity.cpp"
-    /* 指数阶（递归实现） */
-    int expRecur(int n) {
-        if (n == 1) return 1;
-        return expRecur(n - 1) + expRecur(n - 1) + 1;
-    }
-    ```
-
-=== "Python"
-
-    ```python title="time_complexity.py"
-    """ 指数阶（递归实现）"""
-    def exp_recur(n):
-        if n == 1: return 1
-        return exp_recur(n - 1) + exp_recur(n - 1) + 1
-    ```
-
-=== "Go"
-
-    ```go title="time_complexity.go"
-    /* 指数阶（递归实现）*/
-    func expRecur(n int) int {
-        if n == 1 {
-            return 1
-        }
-        return expRecur(n-1) + expRecur(n-1) + 1
-    }
-    ```
-
-=== "JavaScript"
-
-    ```js title="time_complexity.js"
-    /* 指数阶（递归实现） */
-    function expRecur(n) {
-        if (n == 1) return 1;
-        return expRecur(n - 1) + expRecur(n - 1) + 1;
-    }
-    ```
-
-=== "TypeScript"
-
-    ```typescript title="time_complexity.ts"
-    /* 指数阶（递归实现） */
-    function expRecur(n: number): number {
-        if (n == 1) return 1;
-        return expRecur(n - 1) + expRecur(n - 1) + 1;
-    }
-
-    ```
-
-=== "C"
-
-    ```c title="time_complexity.c"
-    /* 指数阶（递归实现） */
-    int expRecur(int n) {
-        if (n == 1) return 1;
-        return expRecur(n - 1) + expRecur(n - 1) + 1;
-    }
-    ```
-
-=== "C#"
-
-    ```csharp title="time_complexity.cs"
-    /* 指数阶（递归实现） */
-    int expRecur(int n)
-    {
-        if (n == 1) return 1;
-        return expRecur(n - 1) + expRecur(n - 1) + 1;
-    }
-    ```
-
-=== "Swift"
-
-    ```swift title="time_complexity.swift"
-    /* 指数阶（递归实现） */
-    func expRecur(n: Int) -> Int {
-        if n == 1 {
-            return 1
-        }
-        return expRecur(n: n - 1) + expRecur(n: n - 1) + 1
-    }
-    ```
+指数阶增长非常迅速，在穷举法（暴力搜索、回溯等）中比较常见。对于数据规模较大的问题，指数阶是不可接受的，通常需要使用动态规划或贪心算法等来解决。
 
 ### 对数阶 $O(\log n)$
 
-对数阶与指数阶正好相反，后者反映“每轮增加到两倍的情况”，而前者反映“每轮缩减到一半的情况”。对数阶仅次于常数阶，时间增长得很慢，是理想的时间复杂度。
+与指数阶相反，对数阶反映了“每轮缩减到一半”的情况。设输入数据大小为 $n$ ，由于每轮缩减到一半，因此循环次数是 $\log_2 n$ ，即 $2^n$ 的反函数。
 
-对数阶常出现于「二分查找」和「分治算法」中，体现“一分为多”、“化繁为简”的算法思想。
+下图和以下代码模拟了“每轮缩减到一半”的过程，时间复杂度为 $O(\log_2 n)$ ，简记为 $O(\log n)$ ：
 
-设输入数据大小为 $n$ ，由于每轮缩减到一半，因此循环次数是 $\log_2 n$ ，即 $2^n$ 的反函数。
+```src
+[file]{time_complexity}-[class]{}-[func]{logarithmic}
+```
 
-=== "Java"
+![对数阶的时间复杂度](time_complexity.assets/time_complexity_logarithmic.png)
 
-    ```java title="time_complexity.java"
-    /* 对数阶（循环实现） */
-    int logarithmic(float n) {
-        int count = 0;
-        while (n > 1) {
-            n = n / 2;
-            count++;
-        }
-        return count;
-    }
-    ```
+与指数阶类似，对数阶也常出现于递归函数中。以下代码形成了一棵高度为 $\log_2 n$ 的递归树：
 
-=== "C++"
+```src
+[file]{time_complexity}-[class]{}-[func]{log_recur}
+```
 
-    ```cpp title="time_complexity.cpp"
-    /* 对数阶（循环实现） */
-    int logarithmic(float n) {
-        int count = 0;
-        while (n > 1) {
-            n = n / 2;
-            count++;
-        }
-        return count;
-    }
-    ```
+对数阶常出现于基于分治策略的算法中，体现了“一分为多”和“化繁为简”的算法思想。它增长缓慢，是仅次于常数阶的理想的时间复杂度。
 
-=== "Python"
+!!! tip "$O(\log n)$ 的底数是多少？"
 
-    ```python title="time_complexity.py"
-    """ 对数阶（循环实现）"""
-    def logarithmic(n):
-        count = 0
-        while n > 1:
-            n = n / 2
-            count += 1
-        return count
-    ```
+    准确来说，“一分为 $m$”对应的时间复杂度是 $O(\log_m n)$ 。而通过对数换底公式，我们可以得到具有不同底数、相等的时间复杂度：
 
-=== "Go"
+    $$
+    O(\log_m n) = O(\log_k n / \log_k m) = O(\log_k n)
+    $$
 
-    ```go title="time_complexity.go"
-    /* 对数阶（循环实现）*/
-    func logarithmic(n float64) int {
-        count := 0
-        for n > 1 {
-            n = n / 2
-            count++
-        }
-        return count
-    }
-    ```
-
-=== "JavaScript"
-
-    ```js title="time_complexity.js"
-    /* 对数阶（循环实现） */
-    function logarithmic(n) {
-        let count = 0;
-        while (n > 1) {
-            n = n / 2;
-            count++;
-        }
-        return count;
-    }
-    ```
-
-=== "TypeScript"
-
-    ```typescript title="time_complexity.ts"
-    /* 对数阶（循环实现） */
-    function logarithmic(n: number): number {
-        let count = 0;
-        while (n > 1) {
-            n = n / 2;
-            count++;
-        }
-        return count;
-    }
-    ```
-
-=== "C"
-
-    ```c title="time_complexity.c"
-    /* 对数阶（循环实现） */
-    int logarithmic(float n) {
-        int count = 0;
-        while (n > 1) {
-            n = n / 2;
-            count++;
-        }
-        return count;
-    }
-    ```
-
-=== "C#"
-
-    ```csharp title="time_complexity.cs"
-    /* 对数阶（循环实现） */
-    int logarithmic(float n)
-    {
-        int count = 0;
-        while (n > 1)
-        {
-            n = n / 2;
-            count++;
-        }
-        return count;
-    }
-    ```
-
-=== "Swift"
-
-    ```swift title="time_complexity.swift"
-    /* 对数阶（循环实现） */
-    func logarithmic(n: Int) -> Int {
-        var count = 0
-        var n = n
-        while n > 1 {
-            n = n / 2
-            count += 1
-        }
-        return count
-    }
-    ```
-
-![time_complexity_logarithmic](time_complexity.assets/time_complexity_logarithmic.png)
-
-<p align="center"> Fig. 对数阶的时间复杂度 </p>
-
-与指数阶类似，对数阶也常出现于递归函数。以下代码形成了一个高度为 $\log_2 n$ 的递归树。
-
-=== "Java"
-
-    ```java title="time_complexity.java"
-    /* 对数阶（递归实现） */
-    int logRecur(float n) {
-        if (n <= 1) return 0;
-        return logRecur(n / 2) + 1;
-    }
-    ```
-
-=== "C++"
-
-    ```cpp title="time_complexity.cpp"
-    /* 对数阶（递归实现） */
-    int logRecur(float n) {
-        if (n <= 1) return 0;
-        return logRecur(n / 2) + 1;
-    }
-    ```
-
-=== "Python"
-
-    ```python title="time_complexity.py"
-    """ 对数阶（递归实现）"""
-    def log_recur(n):
-        if n <= 1: return 0
-        return log_recur(n / 2) + 1
-    ```
-
-=== "Go"
-
-    ```go title="time_complexity.go"
-    /* 对数阶（递归实现）*/
-    func logRecur(n float64) int {
-        if n <= 1 {
-            return 0
-        }
-        return logRecur(n/2) + 1
-    }
-    ```
-
-=== "JavaScript"
-
-    ```js title="time_complexity.js"
-    /* 对数阶（递归实现） */
-    function logRecur(n) {
-        if (n <= 1) return 0;
-        return logRecur(n / 2) + 1;
-    }
-    ```
-
-=== "TypeScript"
-
-    ```typescript title="time_complexity.ts"
-    /* 对数阶（递归实现） */
-    function logRecur(n: number): number {
-        if (n <= 1) return 0;
-        return logRecur(n / 2) + 1;
-    }
-    ```
-
-=== "C"
-
-    ```c title="time_complexity.c"
-    /* 对数阶（递归实现） */
-    int logRecur(float n) {
-        if (n <= 1) return 0;
-        return logRecur(n / 2) + 1;
-    }
-    ```
-
-=== "C#"
-
-    ```csharp title="time_complexity.cs"
-    /* 对数阶（递归实现） */
-    int logRecur(float n)
-    {
-        if (n <= 1) return 0;
-        return logRecur(n / 2) + 1;
-    }
-    ```
-
-=== "Swift"
-
-    ```swift title="time_complexity.swift"
-    /* 对数阶（递归实现） */
-    func logRecur(n: Int) -> Int {
-        if n <= 1 {
-            return 0
-        }
-        return logRecur(n: n / 2) + 1
-    }
-    ```
+    也就是说，底数 $m$ 可以在不影响复杂度的前提下转换。因此我们通常会省略底数 $m$ ，将对数阶直接记为 $O(\log n)$ 。
 
 ### 线性对数阶 $O(n \log n)$
 
-线性对数阶常出现于嵌套循环中，两层循环的时间复杂度分别为 $O(\log n)$ 和 $O(n)$ 。
+线性对数阶常出现于嵌套循环中，两层循环的时间复杂度分别为 $O(\log n)$ 和 $O(n)$ 。相关代码如下：
 
-主流排序算法的时间复杂度都是 $O(n \log n )$ ，例如快速排序、归并排序、堆排序等。
+```src
+[file]{time_complexity}-[class]{}-[func]{linear_log_recur}
+```
 
-=== "Java"
+下图展示了线性对数阶的生成方式。二叉树的每一层的操作总数都为 $n$ ，树共有 $\log_2 n + 1$ 层，因此时间复杂度为 $O(n \log n)$ 。
 
-    ```java title="time_complexity.java"
-    /* 线性对数阶 */
-    int linearLogRecur(float n) {
-        if (n <= 1) return 1;
-        int count = linearLogRecur(n / 2) +
-                    linearLogRecur(n / 2);
-        for (int i = 0; i < n; i++) {
-            count++;
-        }
-        return count;
-    }
-    ```
+![线性对数阶的时间复杂度](time_complexity.assets/time_complexity_logarithmic_linear.png)
 
-=== "C++"
-
-    ```cpp title="time_complexity.cpp"
-    /* 线性对数阶 */
-    int linearLogRecur(float n) {
-        if (n <= 1) return 1;
-        int count = linearLogRecur(n / 2) +
-                    linearLogRecur(n / 2);
-        for (int i = 0; i < n; i++) {
-            count++;
-        }
-        return count;
-    }
-    ```
-
-=== "Python"
-
-    ```python title="time_complexity.py"
-    """ 线性对数阶 """
-    def linear_log_recur(n):
-        if n <= 1: return 1
-        count = linear_log_recur(n // 2) + \
-                linear_log_recur(n // 2)
-        for _ in range(n):
-            count += 1
-        return count
-    ```
-
-=== "Go"
-
-    ```go title="time_complexity.go"
-    /* 线性对数阶 */
-    func linearLogRecur(n float64) int {
-        if n <= 1 {
-            return 1
-        }
-        count := linearLogRecur(n/2) +
-            linearLogRecur(n/2)
-        for i := 0.0; i < n; i++ {
-            count++
-        }
-        return count
-    }
-    ```
-
-=== "JavaScript"
-
-    ```js title="time_complexity.js"
-    /* 线性对数阶 */
-    function linearLogRecur(n) {
-        if (n <= 1) return 1;
-        let count = linearLogRecur(n / 2) + linearLogRecur(n / 2);
-        for (let i = 0; i < n; i++) {
-            count++;
-        }
-        return count;
-    }
-    ```
-
-=== "TypeScript"
-
-    ```typescript title="time_complexity.ts"
-    /* 线性对数阶 */
-    function linearLogRecur(n: number): number {
-        if (n <= 1) return 1;
-        let count = linearLogRecur(n / 2) + linearLogRecur(n / 2);
-        for (let i = 0; i < n; i++) {
-            count++;
-        }
-        return count;
-    }
-    ```
-
-=== "C"
-
-    ```c title="time_complexity.c"
-    /* 线性对数阶 */
-    int linearLogRecur(float n) {
-        if (n <= 1) return 1;
-        int count = linearLogRecur(n / 2) +
-                    linearLogRecur(n / 2);
-        for (int i = 0; i < n; i++) {
-            count ++;
-        }
-        return count;
-    }
-    ```
-
-=== "C#"
-
-    ```csharp title="time_complexity.cs"
-    /* 线性对数阶 */
-    int linearLogRecur(float n)
-    {
-        if (n <= 1) return 1;
-        int count = linearLogRecur(n / 2) +
-                    linearLogRecur(n / 2);
-        for (int i = 0; i < n; i++)
-        {
-            count++;
-        }
-        return count;
-    }
-    ```
-
-=== "Swift"
-
-    ```swift title="time_complexity.swift"
-    /* 线性对数阶 */
-    func linearLogRecur(n: Double) -> Int {
-        if n <= 1 {
-            return 1
-        }
-        var count = linearLogRecur(n: n / 2) + linearLogRecur(n: n / 2)
-        for _ in 0 ..< Int(n) {
-            count += 1
-        }
-        return count
-    }
-    ```
-
-![time_complexity_logarithmic_linear](time_complexity.assets/time_complexity_logarithmic_linear.png)
-
-<p align="center"> Fig. 线性对数阶的时间复杂度 </p>
+主流排序算法的时间复杂度通常为 $O(n \log n)$ ，例如快速排序、归并排序、堆排序等。
 
 ### 阶乘阶 $O(n!)$
 
-阶乘阶对应数学上的「全排列」。即给定 $n$ 个互不重复的元素，求其所有可能的排列方案，则方案数量为
+阶乘阶对应数学上的“全排列”问题。给定 $n$ 个互不重复的元素，求其所有可能的排列方案，方案数量为：
 
 $$
-n! = n \times (n - 1) \times (n - 2) \times \cdots \times 2 \times 1
+n! = n \times (n - 1) \times (n - 2) \times \dots \times 2 \times 1
 $$
 
-阶乘常使用递归实现。例如以下代码，第一层分裂出 $n$ 个，第二层分裂出 $n - 1$ 个，…… ，直至到第 $n$ 层时终止分裂。
+阶乘通常使用递归实现。如下图和以下代码所示，第一层分裂出 $n$ 个，第二层分裂出 $n - 1$ 个，以此类推，直至第 $n$ 层时停止分裂：
 
-=== "Java"
+```src
+[file]{time_complexity}-[class]{}-[func]{factorial_recur}
+```
 
-    ```java title="time_complexity.java"
-    /* 阶乘阶（递归实现） */
-    int factorialRecur(int n) {
-        if (n == 0) return 1;
-        int count = 0;
-        // 从 1 个分裂出 n 个
-        for (int i = 0; i < n; i++) {
-            count += factorialRecur(n - 1);
-        }
-        return count;
-    }
-    ```
+![阶乘阶的时间复杂度](time_complexity.assets/time_complexity_factorial.png)
 
-=== "C++"
-
-    ```cpp title="time_complexity.cpp"
-    /* 阶乘阶（递归实现） */
-    int factorialRecur(int n) {
-        if (n == 0) return 1;
-        int count = 0;
-        // 从 1 个分裂出 n 个
-        for (int i = 0; i < n; i++) {
-            count += factorialRecur(n - 1);
-        }
-        return count;
-    }
-    ```
-
-=== "Python"
-
-    ```python title="time_complexity.py"
-    """ 阶乘阶（递归实现）"""
-    def factorial_recur(n):
-        if n == 0: return 1
-        count = 0
-        # 从 1 个分裂出 n 个
-        for _ in range(n):
-            count += factorial_recur(n - 1)
-        return count
-    ```
-
-=== "Go"
-
-    ```go title="time_complexity.go"
-    /* 阶乘阶（递归实现） */
-    func factorialRecur(n int) int {
-        if n == 0 {
-            return 1
-        }
-        count := 0
-        // 从 1 个分裂出 n 个
-        for i := 0; i < n; i++ {
-            count += factorialRecur(n - 1)
-        }
-        return count
-    }
-    ```
-
-=== "JavaScript"
-
-    ```js title="time_complexity.js"
-    /* 阶乘阶（递归实现） */
-    function factorialRecur(n) {
-        if (n == 0) return 1;
-        let count = 0;
-        // 从 1 个分裂出 n 个
-        for (let i = 0; i < n; i++) {
-            count += factorialRecur(n - 1);
-        }
-        return count;
-    }
-    ```
-
-=== "TypeScript"
-
-    ```typescript title="time_complexity.ts"
-    /* 阶乘阶（递归实现） */
-    function factorialRecur(n: number): number {
-        if (n == 0) return 1;
-        let count = 0;
-        // 从 1 个分裂出 n 个
-        for (let i = 0; i < n; i++) {
-            count += factorialRecur(n - 1);
-        }
-        return count;
-    }
-    ```
-
-=== "C"
-
-    ```c title="time_complexity.c"
-    /* 阶乘阶（递归实现） */
-    int factorialRecur(int n) {
-        if (n == 0) return 1;
-        int count = 0;
-        for (int i = 0; i < n; i++) {
-            count += factorialRecur(n - 1);
-        }
-        return count;
-    }
-    ```
-
-=== "C#"
-
-    ```csharp title="time_complexity.cs"
-    /* 阶乘阶（递归实现） */
-    int factorialRecur(int n)
-    {
-        if (n == 0) return 1;
-        int count = 0;
-        // 从 1 个分裂出 n 个
-        for (int i = 0; i < n; i++)
-        {
-            count += factorialRecur(n - 1);
-        }
-        return count;
-    }
-    ```
-
-=== "Swift"
-
-    ```swift title="time_complexity.swift"
-    /* 阶乘阶（递归实现） */
-    func factorialRecur(n: Int) -> Int {
-        if n == 0 {
-            return 1
-        }
-        var count = 0
-        // 从 1 个分裂出 n 个
-        for _ in 0 ..< n {
-            count += factorialRecur(n: n - 1)
-        }
-        return count
-    }
-    ```
-
-![time_complexity_factorial](time_complexity.assets/time_complexity_factorial.png)
-
-<p align="center"> Fig. 阶乘阶的时间复杂度 </p>
+请注意，因为当 $n \geq 4$ 时恒有 $n! > 2^n$ ，所以阶乘阶比指数阶增长得更快，在 $n$ 较大时也是不可接受的。
 
 ## 最差、最佳、平均时间复杂度
 
-**某些算法的时间复杂度不是恒定的，而是与输入数据的分布有关**。举一个例子，输入一个长度为 $n$ 数组 `nums` ，其中 `nums` 由从 $1$ 至 $n$ 的数字组成，但元素顺序是随机打乱的；算法的任务是返回元素 $1$ 的索引。我们可以得出以下结论：
+**算法的时间效率往往不是固定的，而是与输入数据的分布有关**。假设输入一个长度为 $n$ 的数组 `nums` ，其中 `nums` 由从 $1$ 至 $n$ 的数字组成，每个数字只出现一次；但元素顺序是随机打乱的，任务目标是返回元素 $1$ 的索引。我们可以得出以下结论。
 
-- 当 `nums = [?, ?, ..., 1]`，即当末尾元素是 $1$ 时，则需完整遍历数组，此时达到 **最差时间复杂度 $O(n)$** ；
-- 当 `nums = [1, ?, ?, ...]` ，即当首个数字为 $1$ 时，无论数组多长都不需要继续遍历，此时达到 **最佳时间复杂度 $\Omega(1)$** ；
+- 当 `nums = [?, ?, ..., 1]` ，即当末尾元素是 $1$ 时，需要完整遍历数组，**达到最差时间复杂度 $O(n)$** 。
+- 当 `nums = [1, ?, ?, ...]` ，即当首个元素为 $1$ 时，无论数组多长都不需要继续遍历，**达到最佳时间复杂度 $\Omega(1)$** 。
 
-「函数渐近上界」使用大 $O$ 记号表示，代表「最差时间复杂度」。与之对应，「函数渐近下界」用 $\Omega$ 记号（Omega Notation）来表示，代表「最佳时间复杂度」。
+“最差时间复杂度”对应函数渐近上界，使用大 $O$ 记号表示。相应地，“最佳时间复杂度”对应函数渐近下界，用 $\Omega$ 记号表示：
 
-=== "Java"
+```src
+[file]{worst_best_time_complexity}-[class]{}-[func]{find_one}
+```
 
-    ```java title="worst_best_time_complexity.java"
-    public class worst_best_time_complexity {
-        /* 生成一个数组，元素为 { 1, 2, ..., n }，顺序被打乱 */
-        int[] randomNumbers(int n) {
-            Integer[] nums = new Integer[n];
-            // 生成数组 nums = { 1, 2, 3, ..., n }
-            for (int i = 0; i < n; i++) {
-                nums[i] = i + 1;
-            }
-            // 随机打乱数组元素
-            Collections.shuffle(Arrays.asList(nums));
-            // Integer[] -> int[]
-            int[] res = new int[n];
-            for (int i = 0; i < n; i++) {
-                res[i] = nums[i];
-            }
-            return res;
-        }
+值得说明的是，我们在实际中很少使用最佳时间复杂度，因为通常只有在很小概率下才能达到，可能会带来一定的误导性。**而最差时间复杂度更为实用，因为它给出了一个效率安全值**，让我们可以放心地使用算法。
 
-        /* 查找数组 nums 中数字 1 所在索引 */
-        int findOne(int[] nums) {
-            for (int i = 0; i < nums.length; i++) {
-                if (nums[i] == 1)
-                    return i;
-            }
-            return -1;
-        }
+从上述示例可以看出，最差时间复杂度和最佳时间复杂度只出现于“特殊的数据分布”，这些情况的出现概率可能很小，并不能真实地反映算法运行效率。相比之下，**平均时间复杂度可以体现算法在随机输入数据下的运行效率**，用 $\Theta$ 记号来表示。
 
-        /* Driver Code */
-        public void main(String[] args) {
-            for (int i = 0; i < 10; i++) {
-                int n = 100;
-                int[] nums = randomNumbers(n);
-                int index = findOne(nums);
-                System.out.println("打乱后的数组为 " + Arrays.toString(nums));
-                System.out.println("数字 1 的索引为 " + index);
-            }
-        }
-    }
-    ```
+对于部分算法，我们可以简单地推算出随机数据分布下的平均情况。比如上述示例，由于输入数组是被打乱的，因此元素 $1$ 出现在任意索引的概率都是相等的，那么算法的平均循环次数就是数组长度的一半 $n / 2$ ，平均时间复杂度为 $\Theta(n / 2) = \Theta(n)$ 。
 
-=== "C++"
-
-    ```cpp title="worst_best_time_complexity.cpp"
-    /* 生成一个数组，元素为 { 1, 2, ..., n }，顺序被打乱 */
-    vector<int> randomNumbers(int n) {
-        vector<int> nums(n);
-        // 生成数组 nums = { 1, 2, 3, ..., n }
-        for (int i = 0; i < n; i++) {
-            nums[i] = i + 1;
-        }
-        // 使用系统时间生成随机种子
-        unsigned seed = chrono::system_clock::now().time_since_epoch().count();
-        // 随机打乱数组元素
-        shuffle(nums.begin(), nums.end(), default_random_engine(seed));
-        return nums;
-    }
-
-    /* 查找数组 nums 中数字 1 所在索引 */
-    int findOne(vector<int>& nums) {
-        for (int i = 0; i < nums.size(); i++) {
-            if (nums[i] == 1)
-                return i;
-        }
-        return -1;
-    }
-
-
-    /* Driver Code */
-    int main() {
-        for (int i = 0; i < 1000; i++) {
-            int n = 100;
-            vector<int> nums = randomNumbers(n);
-            int index = findOne(nums);
-            cout << "\n数组 [ 1, 2, ..., n ] 被打乱后 = ";
-            PrintUtil::printVector(nums);
-            cout << "数字 1 的索引为 " << index << endl;
-        }
-        return 0;
-    }
-    ```
-
-=== "Python"
-
-    ```python title="worst_best_time_complexity.py"
-    """ 生成一个数组，元素为: 1, 2, ..., n ，顺序被打乱 """
-    def random_numbers(n):
-        # 生成数组 nums =: 1, 2, 3, ..., n
-        nums = [i for i in range(1, n + 1)]
-        # 随机打乱数组元素
-        random.shuffle(nums)
-        return nums
-
-    """ 查找数组 nums 中数字 1 所在索引 """
-    def find_one(nums):
-        for i in range(len(nums)):
-            if nums[i] == 1:
-                return i
-        return -1
-
-    """ Driver Code """
-    if __name__ == "__main__":
-        for i in range(10):
-            n = 100
-            nums = random_numbers(n)
-            index = find_one(nums)
-            print("\n数组 [ 1, 2, ..., n ] 被打乱后 =", nums)
-            print("数字 1 的索引为", index)
-    ```
-
-=== "Go"
-
-    ```go title="worst_best_time_complexity.go"
-    /* 生成一个数组，元素为 { 1, 2, ..., n }，顺序被打乱 */
-    func randomNumbers(n int) []int {
-        nums := make([]int, n)
-        // 生成数组 nums = { 1, 2, 3, ..., n }
-        for i := 0; i < n; i++ {
-            nums[i] = i + 1
-        }
-        // 随机打乱数组元素
-        rand.Shuffle(len(nums), func(i, j int) {
-            nums[i], nums[j] = nums[j], nums[i]
-        })
-        return nums
-    }
-
-    /* 查找数组 nums 中数字 1 所在索引 */
-    func findOne(nums []int) int {
-        for i := 0; i < len(nums); i++ {
-            if nums[i] == 1 {
-                return i
-            }
-        }
-        return -1
-    }
-
-    /* Driver Code */
-    func main() {
-        for i := 0; i < 10; i++ {
-            n := 100
-            nums := randomNumbers(n)
-            index := findOne(nums)
-            fmt.Println("\n数组 [ 1, 2, ..., n ] 被打乱后 =", nums)
-            fmt.Println("数字 1 的索引为", index)
-        }
-    }
-    ```
-
-=== "JavaScript"
-
-    ```js title="worst_best_time_complexity.js"
-    /* 生成一个数组，元素为 { 1, 2, ..., n }，顺序被打乱 */
-    function randomNumbers(n) {
-        let nums = Array(n);
-        // 生成数组 nums = { 1, 2, 3, ..., n }
-        for (let i = 0; i < n; i++) {
-            nums[i] = i + 1;
-        }
-        // 随机打乱数组元素
-        for (let i = 0; i < n; i++) {
-            let r = Math.floor(Math.random() * (i + 1));
-            let temp = nums[i];
-            nums[i] = nums[r];
-            nums[r] = temp;
-        }
-        return nums;
-    }
-
-    /* 查找数组 nums 中数字 1 所在索引 */
-    function findOne(nums) {
-        for (let i = 0; i < nums.length; i++) {
-            if (nums[i] === 1) {
-                return i;
-            }
-        }
-        return -1;
-    }
-
-    /* Driver Code */
-    function main() {
-        for (let i = 0; i < 10; i++) {
-            let n = 100;
-            let nums = randomNumbers(n);
-            let index = findOne(nums);
-            console.log(
-                "\n数组 [ 1, 2, ..., n ] 被打乱后 = [" + nums.join(", ") + "]"
-            );
-            console.log("数字 1 的索引为 " + index);
-        }
-    }
-    ```
-
-=== "TypeScript"
-
-    ```typescript title="worst_best_time_complexity.ts"
-    /* 生成一个数组，元素为 { 1, 2, ..., n }，顺序被打乱 */
-    function randomNumbers(n: number): number[] {
-        let nums = Array(n);
-        // 生成数组 nums = { 1, 2, 3, ..., n }
-        for (let i = 0; i < n; i++) {
-            nums[i] = i + 1;
-        }
-        // 随机打乱数组元素
-        for (let i = 0; i < n; i++) {
-            let r = Math.floor(Math.random() * (i + 1));
-            let temp = nums[i];
-            nums[i] = nums[r];
-            nums[r] = temp;
-        }
-        return nums;
-    }
-
-    /* 查找数组 nums 中数字 1 所在索引 */
-    function findOne(nums: number[]): number {
-        for (let i = 0; i < nums.length; i++) {
-            if (nums[i] === 1) {
-                return i;
-            }
-        }
-        return -1;
-    }
-
-    /* Driver Code */
-    function main(): void {
-        for (let i = 0; i < 10; i++) {
-            let n = 100;
-            let nums = randomNumbers(n);
-            let index = findOne(nums);
-            console.log(
-                "\n数组 [ 1, 2, ..., n ] 被打乱后 = [" + nums.join(", ") + "]"
-            );
-            console.log("数字 1 的索引为 " + index);
-        }
-    }
-    ```
-
-=== "C"
-
-    ```c title="worst_best_time_complexity.c"
-    /* 生成一个数组，元素为 { 1, 2, ..., n }，顺序被打乱 */
-    int *randomNumbers(int n) {
-        // 分配堆区内存（创建一维可变长数组：数组中元素数量为n，元素类型为int）
-        int *nums = (int *)malloc(n * sizeof(int));
-        // 生成数组 nums = { 1, 2, 3, ..., n }
-        for (int i = 0; i < n; i++) {
-            nums[i] = i + 1;
-        }
-        // 随机打乱数组元素 
-        for (int i = n - 1; i > 0; i--) {
-            int j = rand() % (i + 1);
-            int temp = nums[i];
-            nums[i] = nums[j];
-            nums[j] = temp; 
-        }
-        return nums;
-    }
-
-    /* 查找数组 nums 中数字 1 所在索引 */
-    int findOne(int *nums, int n) {
-        for (int i = 0; i < n; i++) {
-            if (nums[i] == 1) return i;
-        }
-        return -1;
-    }
-
-    /* Driver Code */
-    int main(int argc, char *argv[]) {
-        // 初始化随机数种子
-        srand((unsigned int)time(NULL));
-        for (int i = 0; i < 10; i++) {
-            int n = 100;
-            int *nums = randomNumbers(n);
-            int index = findOne(nums, n);
-            printf("\n数组 [ 1, 2, ..., n ] 被打乱后 = ");
-            printArray(nums, n);
-            printf("数字 1 的索引为 %d\n", index);
-            // 释放堆区内存
-            if (nums != NULL) {
-                free(nums);
-                nums = NULL;
-            }
-        }
-        getchar();
-        return 0;
-    }
-    ```
-
-=== "C#"
-
-    ```csharp title="worst_best_time_complexity.cs"
-    /* 生成一个数组，元素为 { 1, 2, ..., n }，顺序被打乱 */
-    int[] randomNumbers(int n)
-    {
-        int[] nums = new int[n];
-        // 生成数组 nums = { 1, 2, 3, ..., n }
-        for (int i = 0; i < n; i++)
-        {
-            nums[i] = i + 1;
-        }
-
-        // 随机打乱数组元素
-        for (int i = 0; i < nums.Length; i++)
-        {
-            var index = new Random().Next(i, nums.Length);
-            var tmp = nums[i];
-            var ran = nums[index];
-            nums[i] = ran;
-            nums[index] = tmp;
-        }
-        return nums;
-    }
-
-    /* 查找数组 nums 中数字 1 所在索引 */
-    int findOne(int[] nums)
-    {
-        for (int i = 0; i < nums.Length; i++)
-        {
-            if (nums[i] == 1)
-                return i;
-        }
-        return -1;
-    }
-
-    /* Driver Code */
-    public void main(String[] args)
-    {
-        for (int i = 0; i < 10; i++)
-        {
-            int n = 100;
-            int[] nums = randomNumbers(n);
-            int index = findOne(nums);
-            Console.WriteLine("\n数组 [ 1, 2, ..., n ] 被打乱后 = " + string.Join(",", nums));
-            Console.WriteLine("数字 1 的索引为 " + index);
-        }
-    }
-    ```
-
-=== "Swift"
-
-    ```swift title="worst_best_time_complexity.swift"
-    /* 生成一个数组，元素为 { 1, 2, ..., n }，顺序被打乱 */
-    func randomNumbers(n: Int) -> [Int] {
-        // 生成数组 nums = { 1, 2, 3, ..., n }
-        var nums = Array(1 ... n)
-        // 随机打乱数组元素
-        nums.shuffle()
-        return nums
-    }
-
-    /* 查找数组 nums 中数字 1 所在索引 */
-    func findOne(nums: [Int]) -> Int {
-        for i in nums.indices {
-            if nums[i] == 1 {
-                return i
-            }
-        }
-        return -1
-    }
-
-    /* Driver Code */
-    func main() {
-        for _ in 0 ..< 10 {
-            let n = 100
-            let nums = randomNumbers(n: n)
-            let index = findOne(nums: nums)
-            print("数组 [ 1, 2, ..., n ] 被打乱后 = \(nums)")
-            print("数字 1 的索引为 \(index)")
-        }
-    }
-    ```
-
-!!! tip
-
-    我们在实际应用中很少使用「最佳时间复杂度」，因为往往只有很小概率下才能达到，会带来一定的误导性。反之，「最差时间复杂度」最为实用，因为它给出了一个“效率安全值”，让我们可以放心地使用算法。
-
-从上述示例可以看出，最差或最佳时间复杂度只出现在“特殊分布的数据”中，这些情况的出现概率往往很小，因此并不能最真实地反映算法运行效率。**相对地，「平均时间复杂度」可以体现算法在随机输入数据下的运行效率，用 $\Theta$ 记号（Theta Notation）来表示**。
-
-对于部分算法，我们可以简单地推算出随机数据分布下的平均情况。比如上述示例，由于输入数组是被打乱的，因此元素 $1$ 出现在任意索引的概率都是相等的，那么算法的平均循环次数则是数组长度的一半 $\frac{n}{2}$ ，平均时间复杂度为 $\Theta(\frac{n}{2}) = \Theta(n)$ 。
-
-但在实际应用中，尤其是较为复杂的算法，计算平均时间复杂度比较困难，因为很难简便地分析出在数据分布下的整体数学期望。这种情况下，我们一般使用最差时间复杂度来作为算法效率的评判标准。
+但对于较为复杂的算法，计算平均时间复杂度往往比较困难，因为很难分析出在数据分布下的整体数学期望。在这种情况下，我们通常使用最差时间复杂度作为算法效率的评判标准。
 
 !!! question "为什么很少看到 $\Theta$ 符号？"
 
-    实际中我们经常使用「大 $O$ 符号」来表示「平均复杂度」，这样严格意义上来说是不规范的。这可能是因为 $O$ 符号实在是太朗朗上口了。</br>如果在本书和其他资料中看到类似 **平均时间复杂度 $O(n)$** 的表述，请你直接理解为 $\Theta(n)$ 即可。
+    可能由于 $O$ 符号过于朗朗上口，因此我们常常使用它来表示平均时间复杂度。但从严格意义上讲，这种做法并不规范。在本书和其他资料中，若遇到类似“平均时间复杂度 $O(n)$”的表述，请将其直接理解为 $\Theta(n)$ 。
